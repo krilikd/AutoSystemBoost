@@ -21,7 +21,13 @@ asb_profile_baseline_record() {
   mkdir -p "$(dirname "$ASB_PROFILE_BASELINE")" 2>/dev/null || return 1
   [ -f "$ASB_PROFILE_BASELINE" ] || : > "$ASB_PROFILE_BASELINE" 2>/dev/null || return 1
   grep -Fq "$_pb_type|$_pb_key|" "$ASB_PROFILE_BASELINE" 2>/dev/null && return 0
-  printf '%s|%s|%s\n' "$_pb_type" "$_pb_key" "$(printf '%s' "$_pb_value" | tr '\n\r|' '___')" >> "$ASB_PROFILE_BASELINE" 2>/dev/null
+  # Trim the trailing newline rather than rewriting every one.
+  #
+  # Same defect as the native recorder: a sysfs value arrives as "1200000\n" and was
+  # stored as "1200000_", which restores as a string no numeric node accepts. Only an
+  # embedded pipe still needs substituting, because it would break the record format.
+  _pb_clean="$(printf '%s' "$_pb_value" | tr -d '\n\r' | tr '|' '_')"
+  printf '%s|%s|%s\n' "$_pb_type" "$_pb_key" "$_pb_clean" >> "$ASB_PROFILE_BASELINE" 2>/dev/null
 }
 
 asb_profile_baseline_capture_path() {
