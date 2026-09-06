@@ -1857,13 +1857,20 @@ static void write_state(const asb_fsm_t *fsm, const asb_metrics_t *m,
                    /* Same file the diagnostic reads. This was published only into the
                     * status JSON, so the report could never see it - the identical
                     * producer/consumer split that hid the consensus fields before. */
-                   "freq_table_n=\"%d,%d,%d\"\n",
+                   "freq_table_n=\"%d,%d,%d\"\n"
+                   /* What the writer was ASKED for, next to what the node holds.
+                    * The report shows the live tiers; without the request beside
+                    * them a tier stuck at stock is indistinguishable from a tier
+                    * the FSM deliberately left alone, and that ambiguity has cost
+                    * several rounds of guessing already. */
+                   "uclamp_want=\"%d,%d\"\n",
                 g_smart_boot_settle, g_startup_quarantined,
                 g_thermal_cpu_type[0] ? g_thermal_cpu_type : "unknown", g_thermal_cpu_zone,
                 g_thermal_source_confidence, g_thermal_rejected_type, g_thermal_rejected_raw,
                 g_thermal_peer_hi, g_thermal_peer_lo, g_thermal_peer_n,
                 g_thermal_consensus_note,
-                writer_freq_table_len(0), writer_freq_table_len(1), writer_freq_table_len(2));
+                writer_freq_table_len(0), writer_freq_table_len(1), writer_freq_table_len(2),
+                writer_last_uclamp_top(), writer_last_uclamp_bg());
         fprintf(f, "cool_gaming=%d\n", g_asb_cfg.cool_gaming);
         fprintf(f, "cool_gaming_level=%d\n", g_smart_cool_gaming_lvl);
         fprintf(f, "game_charging=%d\ngame_bat_temp_peak_dc=%d\n"

@@ -1016,6 +1016,13 @@ typedef struct {
  * very first comparison. */
 static asb_writer_cache_t g_wcache = { .gpu_min_written = -1 };
 
+/* Last uclamp values the writer was asked to apply, for diagnostics. Read from the
+ * cache rather than the node: the point is to compare intent against reality, and the
+ * report already prints reality. */
+static int writer_last_uclamp_top(void) { return g_wcache.uclamp_top_max; }
+static int writer_last_uclamp_bg(void)  { return g_wcache.uclamp_bg_max; }
+
+
 static unsigned long g_vendor_override_max = 0;
 static unsigned long g_vendor_override_min = 0;
 static unsigned long g_vendor_override_backoffs = 0;
