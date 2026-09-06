@@ -500,7 +500,18 @@ if [ -n "$MIX" ]; then
   _aud_aggr="$(cfg audio_dac_hifi)"
   [ -n "$_aud_aggr" ] || _aud_aggr="$(cfg AUDIO_AGGRESSIVE)"
   NOTE "audio_dac_hifi toggle = ${_aud_aggr:-0}"
-  if [ "${_aud_aggr:-0}" = "1" ]; then
+  # These land through the /vendor overlay, so without it there is nothing to check.
+  #
+  # The tweak being on does not mean the writes happened: mixer_paths and the media
+  # profiles are patched into an overlay, and VENDOR_OVERLAY=0 ships in this build. The
+  # report showed three FAIL lines for a mechanism that was never enabled, which reads as
+  # a broken module rather than a disabled feature.
+  _vov="$(grep -E '^[[:space:]]*VENDOR_OVERLAY=' "$MODDIR/features.conf" 2>/dev/null \
+          | head -1 | sed 's/.*=//' | tr -d ' \r' | cut -d'#' -f1)"
+  if [ "${_aud_aggr:-0}" = "1" ] && [ "${_vov:-0}" != "1" ]; then
+    NOTE "mixer/profile tweaks need the /vendor overlay (VENDOR_OVERLAY=0) - not checked"
+  fi
+  if [ "${_aud_aggr:-0}" = "1" ] && [ "${_vov:-0}" = "1" ]; then
     _comp=$(grep -c 'HPH[LR] Compander" value="1"' "$MIX" 2>/dev/null)
     _hifi=$(grep -c 'RX HPH Mode" value="CLS_H_HIFI"' "$MIX" 2>/dev/null)
     V "Aggressive: HPH companders OFF (engaged=0)" "0" "$_comp" eq
@@ -1482,7 +1493,15 @@ else
   if [ -n "$CMP" ]; then
     _br=$(awk '/quality="1080p"/{f=1} f&&/bitRate=/{match($0,/bitRate="[0-9]+"/);print substr($0,RSTART+9,RLENGTH-10);exit}' "$CMP" 2>/dev/null)
     case "$_cam_plat" in canoe|sm8850*) _bexp=40000000 ;; *) _bexp=37300000 ;; esac
-    V "  1080p video bitrate raised" "$_bexp" "$_br" eq
+    # Same overlay dependency as the mixer tweaks above: the media profile is patched
+    # into the /vendor overlay, so with VENDOR_OVERLAY=0 the stock value is expected.
+    _vov2="$(grep -E '^[[:space:]]*VENDOR_OVERLAY=' "$MODDIR/features.conf" 2>/dev/null \
+             | head -1 | sed 's/.*=//' | tr -d ' \r' | cut -d'#' -f1)"
+    if [ "${_vov2:-0}" = "1" ]; then
+      V "  1080p video bitrate raised" "$_bexp" "$_br" eq
+    else
+      NOTE "  1080p bitrate needs the /vendor overlay (VENDOR_OVERLAY=0) - not checked"
+    fi
   fi
 fi
 
