@@ -205,8 +205,23 @@ static int asb_batt_current_to_ma(long raw) {
         if (a >= 100000) g_batt_cur_unit = 1;
         else {
             g_batt_cur_samples++;
+            /* A low peak is not proof of milliamps.
+             *
+             * 50000 was chosen as "no phone draws less than 50 mA", and that is true of a
+             * phone in use - but not of one asleep, which sits at 10-30 mA. A module that
+             * starts while the phone is idle sees thirty samples under the threshold and
+             * concludes the node reports milliamps. From then on 20000 uA is read as
+             * 20000 mA: three battery capacities per hour, on a device drawing 20.
+             *
+             * The extra condition is a sanity check on the CONCLUSION rather than on the
+             * samples. If these really were milliamps, the peak would be a plausible
+             * current for a phone - tens to hundreds. A peak of 20000 in milliamps is
+             * 20 amps, which no phone draws, so the milliamp reading must be wrong.
+             *
+             * 5000 as the ceiling: a phone can pull 5 A while fast-charging, and nothing
+             * legitimate goes above that. */
             if (g_batt_cur_samples >= 30 && g_batt_cur_peak > 0 &&
-                g_batt_cur_peak < 50000) {
+                g_batt_cur_peak < 50000 && g_batt_cur_peak <= 5000) {
                 g_batt_cur_unit = 2;
             }
         }
@@ -597,9 +612,19 @@ static int asb_bounds_scale(int slot, int kHz) {
 }
 
 static const char *cpu_policy_path(int slot, const char *file) {
-    static char buf[4][128];
+    /* Eight slots, not four.
+     *
+     * The caller gets a pointer into a rotating buffer, so every result stays valid only
+     * until the ring wraps. With four slots, four calls in one expression fill it exactly -
+     * and asb_governor.c:2318 does precisely that. One more call anywhere in the same
+     * statement, on any device with more clusters than the one it was written for, and the
+     * first pointer starts reading a path built for a different policy.
+     *
+     * Nothing about that fails loudly: it produces a valid path to the wrong node. Eight
+     * gives room for the widest expression in the tree plus the same again. */
+    static char buf[8][128];
     static int idx = 0;
-    idx = (idx + 1) & 3;
+    idx = (idx + 1) & 7;
     if (g_cpu_policy_ids[slot] < 0) { buf[idx][0] =  0;    return buf[idx]; }
     snprintf(buf[idx], sizeof(buf[idx]),
              "/sys/devices/system/cpu/cpufreq/policy%d/%s",
