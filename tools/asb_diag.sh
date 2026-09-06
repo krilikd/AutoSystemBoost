@@ -1233,6 +1233,9 @@ SEC "5a7. APPLY LEDGER  (what the device actually accepted)"
 # Scheduler ceilings that drifted and were put back.
 #
 # Recorded separately because the module CORRECTS them: a live reading always looks right,
+  # What was ASKED for, beside what the node holds.
+  _uw="$(grep -m1 "^uclamp_want=" /dev/.asb/state 2>/dev/null | cut -d= -f2 | tr -d '"')"
+  [ -n "$_uw" ] && NOTE "requested by governor (top,bg): $_uw"
 # so this is the only trace that anything was wrong. top-app uclamp.max at 0 means the
 # scheduler was forbidden from asking for performance for the app on screen - expensive,
 # and invisible without this line.
