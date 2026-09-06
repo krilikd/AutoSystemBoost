@@ -937,7 +937,16 @@ static int gpu_thermal_pl_audit_path(char *out, size_t outlen) {
 }
 
 static int gpu_hz_to_pwrlevel_max(long target_hz) {
-    if (g_gpu_freq_table_len <= 0) return 0;
+    /* No table means no safe answer, and 0 is the least safe one available.
+     *
+     * pwrlevel 0 is the HIGHEST frequency on Adreno - the levels count downward. So a
+     * device whose frequency table could not be read got the opposite of what was asked:
+     * the module requested a lower GPU ceiling and wrote the index that unlocks the top
+     * one.
+     *
+     * -1 tells the caller to leave the GPU alone. Not managing the GPU on a device we
+     * cannot describe is the correct outcome; managing it backwards is not. */
+    if (g_gpu_freq_table_len <= 0) return -1;
     for (int i = 0; i < g_gpu_freq_table_len; i++) {
         if (g_gpu_freq_table[i] <= target_hz) return i;
     }
@@ -1449,8 +1458,14 @@ skip_cpu_caps: ;
                  * Translate target Hz into pwrlevel index.
                  */
                 int pl = gpu_hz_to_pwrlevel_max(gmax);
-                gpu_ok = (sysfs_write_int(g_gpu_max_path, pl) == 0);
-                if (gpu_ok) g_wcache.last_max_pwrlevel_written = pl;
+                /* -1 means the table is unknown: skip rather than guess. Counted as ok so
+                 * the caller does not treat an intentional skip as a write failure. */
+                if (pl < 0) {
+                    gpu_ok = 1;
+                } else {
+                    gpu_ok = (sysfs_write_int(g_gpu_max_path, pl) == 0);
+                    if (gpu_ok) g_wcache.last_max_pwrlevel_written = pl;
+                }
             } else {
                 gpu_ok = (sysfs_write_long(g_gpu_max_path, gmax) == 0);
             }
