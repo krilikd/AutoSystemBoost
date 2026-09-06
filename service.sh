@@ -1880,6 +1880,32 @@ asb_bg_trim_reclaim_once() {
 apply_bg_trim_runtime() {
   local _bg_level="${BG_TRIM_LEVEL:-safe}"
 
+  # off means do nothing at all.
+  #
+  # The card offered safe and aggressive only, so the mildest choice available still
+  # rewrote app standby buckets and memory.low/high - there was no way to say "leave my
+  # background apps alone" short of turning off the whole BG_TRIM feature, which is not
+  # in the WebUI. A user who wants ASB for its CPU and thermal work had no opt-out.
+  if [ "$_bg_level" = "off" ]; then
+    # Hand the buckets back before stepping away.
+    #
+    # Stopping here without undoing anything would leave every app ASB had moved to rare
+    # or working_set sitting there, and Android does not promote a bucket on its own
+    # schedule fast enough to notice. uninstall.sh already restores them to active for the
+    # same reason, so this mirrors that path.
+    #
+    # active is where an unmanaged app sits; the scheduler demotes it again on its own if
+    # the app really is idle.
+    if command -v am >/dev/null 2>&1 && command -v pm >/dev/null 2>&1; then
+      for _bgp in $(pm list packages -3 2>/dev/null | sed 's/^package://'); do
+        [ -n "$_bgp" ] || continue
+        am set-standby-bucket "$_bgp" active >/dev/null 2>&1 || true
+      done
+    fi
+    asb_log "bg_trim: off - background apps left exactly as Android manages them"
+    return 0
+  fi
+
   # "safe" must be genuinely non-disruptive.  Before this guard, the same package disables,
   # vendor-service stops and Wi-Fi switches ran for *every* level; only the six-hour loop was
   # conditional.  That made a safe profile behave as aggressive and could provoke service
@@ -2183,7 +2209,17 @@ apply_dsp_compute_boost() {
            /sys/devices/platform/soc/*cdsp*/power \
            /sys/devices/platform/soc/*adsp*/power; do
     [ -d "$d" ] || continue
-    [ -w "$d/control" ] && writef "$d/control" on 2>/dev/null || true
+    # "auto", not "on".
+    #
+    # control=on pins the runtime-PM state: the DSP never autosuspends, so an idle phone
+    # keeps a compute island powered for nothing. That is the opposite of what a module
+    # tuned for battery should leave behind, and nothing restores it - not the profile
+    # switch, not uninstall.
+    #
+    # "auto" is the kernel default and still lets the DSP be woken instantly; the
+    # autosuspend delay set below is what actually keeps it up across a burst of work,
+    # which is the part worth having.
+    [ -w "$d/control" ] && writef "$d/control" auto 2>/dev/null || true
     if [ -w "$d/autosuspend_delay_ms" ]; then
       writef "$d/autosuspend_delay_ms" 2000 2>/dev/null
     fi
@@ -2927,6 +2963,31 @@ asb_apply_deferred_core_boot() {
 }
 
 apply_doze() {
+  # Defer to doze_level when the user has set one.
+  #
+  # This function writes device_idle_constants from the PROFILE, while
+  # runtime/asb_doze_apply.sh writes the same key from the doze_level tweak - and at
+  # doze_level=stock it DELETES the key outright. Two owners of one setting, and which
+  # one wins depends on call order.
+  #
+  # The visible symptom is a tweak that does not stick: the user selects stock, the
+  # helper clears the key, and the next profile pass writes the profile timings back.
+  #
+  # doze_level is the more specific statement - it is a choice about Doze, where the
+  # profile is a choice about everything - so it takes precedence whenever it is set to
+  # anything but its own default.
+  _dz_lvl="$(grep -E '^[[:space:]]*doze_level=' "$MODDIR/config/governor.conf" 2>/dev/null \
+             | head -1 | sed 's/.*=//' | tr -d ' \r')"
+  # stock is this tweak's default AND a deliberate choice, and both mean the same thing
+  # here: Android's own timings, nothing written by the profile either. The helper clears
+  # the key at stock, so returning early is what makes that clearing stick.
+  #
+  # An empty value means the config predates the key - only then does the profile decide.
+  case "$_dz_lvl" in
+    '') : ;;
+    *) return 0 ;;
+  esac
+
   [ "${ASB_STOCK_PROFILE:-0}" = "1" ] && return 0
   has settings || return 0
   case "$ASB_PROFILE" in
