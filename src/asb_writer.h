@@ -1019,8 +1019,10 @@ static asb_writer_cache_t g_wcache = { .gpu_min_written = -1 };
 /* Last uclamp values the writer was asked to apply, for diagnostics. Read from the
  * cache rather than the node: the point is to compare intent against reality, and the
  * report already prints reality. */
-static int writer_last_uclamp_top(void) { return g_wcache.uclamp_top_max; }
-static int writer_last_uclamp_bg(void)  { return g_wcache.uclamp_bg_max; }
+static int g_ucl_want_top = -1;
+static int g_ucl_want_bg  = -1;
+static int writer_last_uclamp_top(void) { return g_ucl_want_top; }
+static int writer_last_uclamp_bg(void)  { return g_ucl_want_bg; }
 
 
 static unsigned long g_vendor_override_max = 0;
@@ -1546,6 +1548,14 @@ skip_cpu_caps: ;
          *
          * Reading four sysfs files per tick is cheap next to being wrong for an hour.
          */
+        /* Record the request itself, before anything can skip or fail it.
+         *
+         * The first version of this read g_wcache, which is only updated on a SUCCESSFUL
+         * write - so a tier that never got written reported 0, which is exactly the case
+         * the field was added to explain. It has to be captured on the way in. */
+        g_ucl_want_top = caps->uclamp_top_max;
+        g_ucl_want_bg  = caps->uclamp_bg_max;
+
         int _ucl_top_now = sysfs_read_int(UCLAMP_TOP_MAX, -1);
         int _ucl_drift = (_ucl_top_now >= 0 && _ucl_top_now != g_wcache.uclamp_top_max);
         if (force || _ucl_drift || caps->uclamp_top_max != g_wcache.uclamp_top_max) {
