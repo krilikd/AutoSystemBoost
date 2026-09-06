@@ -1,1 +1,725 @@
-{"nav_live":"Moniteur","nav_config":"Réglages","nav_back":"Retour","sec_power":"Profil d’énergie","sec_live":"État en direct","sec_config":"Configuration","prof_smart":"Smart","prof_performance":"Performance","prof_balanced":"Équilibré","prof_battery":"Batterie","tag_alpha":"alpha","lv_alpha":"Alpha","lv_app":"Appli","lv_fsm":"FSM","lv_clamp":"Limites 1 h / total","lv_cpu":"Processeur","lv_skin":"Châssis","lv_hotspot":"Point chaud · interne","lv_est_on":"Est. écran","lv_est_idle":"Est. veille","lv_capsrc":"Origine de la limite","lv_learner":"Apprentissage","lv_gpuload":"Charge GPU","lv_headroom":"Marge","lv_lpm":"Modem LPM","lv_ses":"Sessions","lv_drain":"Consommation","lv_trend":"Tendance","lv_measuring":"mesure…","lv_trend_up":"chauffe","lv_trend_dn":"refroidit","lv_trend_fl":"stable","lv_lpm_normal":"normal","lv_lpm_normal_t":"valeur par défaut du profil","lv_lpm_save":"économie","lv_lpm_save_t":"la radio se met en veille, keepalive étiré","lv_lpm_fast":"rapide","lv_lpm_fast_t":"la connexion data est maintenue (faible latence)","cfg_apply_audio":"♫ Appliquer l’audio maintenant","st_mostly_on":"souvent actif","st_always_on":"toujours actif","wb_phantom":"Sans limite, l’arrière-plan vit plus longtemps — certaines applis consommeront de la batterie en fond","wb_doze":"Les notifications de messagerie et d’e-mail peuvent arriver en retard","wb_bgtrim":"Les applications redémarreront plus souvent quand vous y revenez","wb_blur":"Le volet et les menus deviennent opaques — l’effet de verre disparaît","wb_supgame":"Les jeux seront plus lents sur le profil Batterie","wb_dsp":"À gain élevé, distorsion possible sur la musique forte","wb_loud":"Volume maximal plus élevé — risque pour l’audition et pour le haut-parleur","wb_therm":"Un seuil bas bride la vitesse en permanence, pas seulement sous charge","wb_dozewl":"Les notifications des applications retirées peuvent arriver en retard","wb_vol":"L’avertissement de volume sûr est désactivé — risque pour l’audition","wb_gms":"En « strict », les notifications Google peuvent arriver en retard pendant la veille","wb_scan":"Le Wi-Fi cherche des réseaux plus souvent — la batterie se vide plus vite","wb_handover":"Les données mobiles restent prêtes écran allumé et consomment un peu plus de batterie","dsp_idle":"DSP désactivé","as_profile":"selon le profil","as_off":"désactivé","as_stock":"d’origine 1x","t_cfg_next":" · redémarrez l’application","t_pending_reboot":"↻ Modifications en attente de redémarrage","am_live":"⚡ s’applique immédiatement","am_next":"⏭ immédiat, mais il faut redémarrer l’application","am_reboot":"↻ redémarrage nécessaire","t_not_applied":"non appliqué","t_not_applied_hint":"Le réglage est enregistré, mais l’appareil ne l’a pas repris.","t_cfg_audio_live":" · application…","t_cfg_audio_reboot":" · redémarrage nécessaire","t_applying_audio":"Application de l’audio…","t_applied_audio":"Audio appliqué (audioserver redémarré)","t_apply_audio_fail":"Échec de l’application","cfg_reboot":"↻ Redémarrer l’appareil","st_unavail":"non pris en charge","st_failed":"non appliqué","st_pending":"en attente","cfg_soft_reboot":"⟳ Redémarrage rapide","cfg_restart_sysui":"▤ Redémarrer SystemUI","t_soft_confirm":"Encore une fois pour un redémarrage rapide","t_soft_going":"Redémarrage rapide…","t_sysui_going":"Redémarrage de SystemUI…","device_line":"Appareil OnePlus · Qualcomm Snapdragon","t_profile_err":"✗ Échec de l’application du profil","t_cfg_saved":" · redémarrage requis","cfg_camera_key_std":"Standard","cfg_camera_key_ext":"Étendu","t_cfg_err":"✗ Impossible d’écrire le réglage","t_reboot_confirm":"Appuyez à nouveau","t_rebooting":"Redémarrage…","cfg":{"doze_trim_whitelist":{"desc":"Retire vos applications de la liste des exemptions de veille profonde ; les applications système (téléphone, SMS, horloge, gestionnaire root) ne sont pas touchées. Le bouton ci-dessous montre quelles applications sont exemptées et permet de conserver celles dont vous avez besoin.","name":"Réduire les exemptions Doze"},"audio_remove_volume_limit":{"desc":"Retire la limite de volume du casque imposée par la réglementation européenne. ATTENTION : une écoute prolongée à fort volume abîme l’audition. Désactivé par défaut pour cette raison.","name":"Limite de volume du casque"},"gms_trim":{"descOpt":{"stock":"Play services schedule background work as they like.","lite":"Fewer background jobs, nothing disabled.","strict":"Noticeably fewer. Some sync may be delayed."},"desc":"Restreint ce que les services Google peuvent faire en arrière-plan, sans rien désactiver. «Strict» réduit nettement : certaines synchronisations peuvent être retardées.","name":"Limiter les services Google"},"dsp_outputs":{"desc":"Les sorties auxquelles s’applique l’effet DSP. Auparavant il s’accrochait à tout à la fois, si bien qu’un gain destiné au casque montait aussi le haut-parleur du téléphone, le moins apte à l’encaisser.","name":"Sorties du DSP"},"anim_speed":{"desc":"À quelle vitesse le système dessine les transitions. «Selon le profil» correspond à l’ancien comportement : la vitesse était choisie par le profil d’énergie, la réactivité de l’interface était donc un effet secondaire d’un réglage de batterie. C’est désormais un choix à part.","name":"Vitesse des animations"},"phantom_procs":{"descOpt":{"stock":"Android's own limit applies - background child processes get killed.","relaxed":"No limit. Terminal sessions and background compiles survive.","strict":"Limit of 32. Fewer background processes than stock allows."},"desc":"La limite d’Android sur les processus enfants en arrière-plan — c’est elle qui tue les sessions de terminal et les compilations en cours de route. «Aucune limite» la retire entièrement.","name":"Limite de processus en arrière-plan"},"camera_hold_enable":{"desc":"Pendant que la caméra diffuse, le governor cesse de baisser les fréquences et conserve les cœurs déjà occupés. C’est ce qui évite une image perdue dans une rafale ou une vidéo, au prix d’un peu de batterie tant que l’application reste ouverte. «Désactivé» laisse le governor brider la caméra comme n’importe quelle autre application.","name":"Maintenir les performances avec l’appareil photo"},"bt_a2dp_offload":{"descOpt":{"auto":"Hands off - whatever the ROM chose stays.","on":"Hardware encoding. Less battery, and usually what the phone ships with.","off":"CPU encoding. Needed for some equaliser apps to see the stream at all."},"desc":"Qui encode l’audio Bluetooth : le bloc matériel dédié ou le processeur. «Auto» n’intervient pas : ce que la ROM a choisi reste en place. «Activé» force l’encodage matériel (souvent identique au réglage d’usine, mais écrit ici par ASB). «Désactivé» déplace le travail sur le processeur, ce dont certains codecs et égaliseurs ont besoin pour fonctionner du tout.","name":"Déchargement audio Bluetooth"},"night_quiet_enable":{"desc":"La nuit, quand l’écran est éteint depuis longtemps, le governor cesse son propre travail périodique et laisse l’appareil dormir plus profondément. C’est de là que vient l’essentiel de l’économie nocturne.","name":"Nuit calme"},"bat_suppress_gaming":{"desc":"Dans le profil «Batterie», un jeu compte comme une charge lourde ordinaire et non comme une raison d’entrer en mode jeu. Le mode jeu relève les plafonds de fréquence, c’est-à-dire l’inverse de ce pour quoi on choisit «Batterie». Ne concerne que ce profil.","name":"Pas de mode jeu en profil Batterie"},"doze_level":{"descOpt":{"stock":"Android's own timing: idle begins 30 minutes after the screen goes off.","night":"Only during your learned sleep window. Daytime behaviour is untouched.","moderate":"Idle after 5 minutes. The change most people want.","aggressive":"Idle after 2 minutes, plus shorter sensing and locating windows. Apps that poll on their own can be late; high-priority push still arrives."},"desc":"À quelle vitesse Android place le téléphone en veille profonde après l’extinction de l’écran. L’origine attend 30 minutes — sur un téléphone repris en main toutes les quelques minutes, ces 30 minutes n’arrivent jamais. LE PRIX : en veille profonde, le système retient le réseau d’arrière-plan jusqu’à la prochaine fenêtre de maintenance ; une application qui interroge le serveur elle-même peut donc arriver en retard — les push prioritaires passent toujours.","name":"Sommeil profond"},"log_level":{"descOpt":{"0":"Extreme: cuts device logging as far as it goes. Saves writes and wakeups, and makes almost any bug report from this phone useless.","1":"Normal. Significant events only - what the module has always done.","2":"Detailed: adds learner updates and screen transitions. Turn this on before sending a battery log.","3":"Verbose. Fills the log fast; only while reproducing something.","stock":"ASB does not touch the device's logging at all."},"desc":"Combien le module écrit dans son journal et combien l’appareil journalise lui-même. «D’origine» est la seule valeur qui ne touche pas du tout à la journalisation du téléphone. «0» est extrême : il coupe journaux et sorties de débogage autant que possible, économise des écritures et des réveils — et rend presque inutile tout rapport d’anomalie venant de ce téléphone, y compris le nôtre.","name":"Détail des journaux"},"sustained_temp_mode":{"descOpt":{"stock":"This device's own trip point, read from its CPU thermal zone at boot.","smart":"Starts from that point and nudges it up when sessions heat quickly.","manual":"Exactly the temperature on the slider below. Nothing moves it."},"desc":"Quand ASB commence à retenir les performances pour garder le téléphone plus frais. «D’origine» utilise le point de déclenchement de votre appareil, lu au démarrage dans la zone thermique du processeur. «Intelligent» part de là et le relève de 2 degrés quand une session atteint la charge soutenue en moins d’une minute. «Manuel» fixe exactement la valeur du curseur ci-dessous.","name":"Point de bridage"},"sustained_temp_enter":{"desc":"La température à laquelle ASB commence à retenir les performances. Plus bas signifie intervenir plus tôt : un téléphone plus frais qui ralentit plus tôt. IMPORTANT : une valeur inférieure à la température à laquelle le téléphone est simplement posé (généralement 38–48 °C) signifie que le bridage est TOUJOURS actif — fréquences plafonnées en permanence, le travail dure plus longtemps, et le téléphone finit plus chaud et plus vide, pas plus frais. D’où le minimum de 52 °C.","name":"Température de bridage"},"audio_profile":{"desc":"Qui traite le son. «Compatible EQ» transmet le signal intact à un EQ/ViPER externe. «Hi-Fi» active UHQA quand aucun EQ n’est utilisé. «D’origine» ne garde que les réglages de base. S’applique sans redémarrage.","name":"Profil audio"},"audio_dac_hifi":{"desc":"Configuration du codec, pas du logiciel : compandeurs du casque désactivés, HPH Mode → CLS_H_HIFI. N’entre pas en conflit avec un EQ externe : il lui offre un DAC plus propre. Redémarrage requis.","name":"DAC Hi-Fi (mixeur)"},"CAMERA_LEVEL":{"desc":"Intensité de couleur, contraste et détail pour les photos et vidéos : 0 = d’origine, plus haut = plus saturé et contrasté. Fonctionne de façon RELATIVE : multiplie les valeurs réellement présentes dans votre ROM, sans dépendre des chiffres choisis par le constructeur.","name":"Traitement photo"},"CAMERA_GRAIN":{"desc":"Après la réduction de bruit, l’appareil réintroduit du grain : une image parfaitement lisse paraît plastique. 3 est l’origine : plus bas pour un rendu net, plus haut pour une texture marquée, 0 supprime le grain entièrement.","name":"Grain argentique"},"CAMERA_CONTRAST":{"desc":"Contraste et saturation de la courbe tonale. 3 correspond exactement à l’origine (100%), 0 est plus plat (70%), 6 nettement plus contrasté (130%). Indépendant du «Niveau de traitement», qui agit sur la matrice des couleurs.","name":"Contraste et profondeur de couleur"},"CAMERA_PORTRAIT":{"desc":"Traitement neuronal des visages : la ROM d’usine le laisse désactivé (poids 0.0), on écrit donc ici des valeurs absolues et non un multiplicateur. Uniquement à la hausse : si la ROM contient déjà plus que le niveau demandé, rien ne change.","name":"IA portrait"},"CAMERA_LOWLIGHT":{"desc":"Le macro et la faible lumière ont leur propre échelle de netteté, et c’est là que l’excès se voit le plus : sujets proches et ISO élevés accentuent les halos. 0 suit le traitement principal ; ne montez que si ces modes paraissent mous.","name":"Netteté macro et faible lumière"},"smart_battery_bias":{"desc":"À quel point Smart penche vers l’autonomie. Plus haut, il garde les fréquences basses plus longtemps ; plus bas, il les libère plus tôt. À partir de 400, Smart se comporte presque comme «Batterie» même en usage actif.","name":"Inclinaison batterie Smart"},"CAMERA_AGGRESSIVE_INJECT":{"desc":"SÛR : uniquement les clés de ton présentes. AGRESSIF injecte celles qui manquent (OnePlus 13/12) — risqué, revenez à SÛR en cas de problème."},"media_loudness":{"desc":"Plus fort aux positions du curseur que vous utilisez vraiment : léger ≈+3 dB, fort ≈+6, maximum ≈+10. Ne touche ni les crans les plus bas, ni les alarmes, ni les sonneries, et ne peut pas saturer. Au maximum, le haut du curseur devient plus grossier. Redémarrage requis.","name":"Volume multimédia"},"dsp_loudness":{"desc":"Gain de volume du moteur audio d’ASB, au-delà du maximum système. Le limiteur doux empêche la saturation : la sortie est bornée par construction, les décibels supplémentaires changent donc la densité du son, pas sa propreté.","name":"Gain DSP"},"dsp_bass":{"desc":"Gain des basses fréquences par le même moteur. Agit sur la sortie choisie dans «Sorties DSP».","name":"Renfort de basses DSP"},"dsp_compressor":{"desc":"Comprime la dynamique : les sons faibles deviennent audibles, les forts cessent de frapper. Utile en déplacement et dans la rue, superflu pour une écoute attentive à la maison.","name":"Compresseur DSP"},"bt_absvol_mode":{"desc":"«D’origine» : une seule échelle, le curseur du téléphone déplace directement le volume du casque. «Désactiver» : échelles indépendantes, le téléphone applique son propre gain par-dessus celui du casque — c’est plus fort, et c’est ce dont ViPER et les égaliseurs ont besoin. Le prix : les échelles ne coïncident plus et sur certains casques les crans bas deviennent grossiers.","name":"Contrôle du volume Bluetooth"},"cool_gaming":{"desc":"Dans les jeux, le seuil thermique intervient plus tôt : le téléphone reste plus frais au prix de quelques images. Utile lors des longues sessions, superflu pour les courtes.","name":"Jeu au frais"},"charge_aware_enable":{"desc":"En charge, il accorde plus de marge ; en cas de chaleur, moins. Un téléphone branché n’a aucune raison d’économiser comme sur batterie.","name":"Mode charge"},"auto_battery_enable":{"desc":"À 20% de charge, le profil bascule seul sur «Batterie» et revient à 21% après la recharge. Le chiffre du réglage correspond à celui de l’icône de batterie.","name":"Profil batterie automatique"},"BG_TRIM_LEVEL":{"desc":"À quel point les applications en arrière-plan sont déchargées. «Sûr» reste prudent, «agressif» libère plus de mémoire au prix de quelques applications qui redémarrent au retour.","name":"Nettoyage de l’arrière-plan"},"UX_MANAGE_TIMEOUTS":{"desc":"Performance raccourcit les animations (~0,8x) ainsi que les fenêtres d’appui long et de multi-appui pour la réactivité ; Batterie reste d’origine. DÉSACTIVÉ = ne toucher à rien.","name":"Gérer la vitesse de l’interface"},"UX_MANAGE_OEM_TOGGLES":{"desc":"Autorise ASB à gérer les interrupteurs système d’OxygenOS : extension de RAM, optimisation de la batterie, gestion de la chaleur. DÉSACTIVÉ = ne pas y toucher du tout, et vos réglages restent les vôtres.","name":"Gérer les réglages du constructeur"},"UX_ANIM_FORCE_RESTART":{"desc":"Presque jamais nécessaire. WindowManager relit les échelles d’animation juste après l’écriture : changer le réglage suffit. Cet interrupteur n’existe que pour recueillir des diagnostics.","name":"Forcer le redémarrage des animations"},"disable_blur":{"desc":"Désactive le flou partout : volet, notifications, panneau de volume, transitions. Moins de charge GPU, le volet devient opaque au lieu de dépoli. À noter : la notification affichée perd aussi son fond flouté.","name":"Désactiver le flou"},"ui_effects_level":{"descOpt":{"auto":"Leave the system's own effect level alone.","stock":"Normal effects, as the device shipped.","flat":"Simplified. Recents becomes a plain list and OxygenOS hides the Cards/Simple selector entirely. OnePlus 15 only."},"desc":"À quel point le système dessine richement les transitions et les Récents. «Normaux» correspond à la sortie d’usine. «Simplifiés» utilise moins d’effets et un peu moins de GPU. IMPORTANT : en simplifié, les Récents deviennent une simple liste et OxygenOS SUPPRIME entièrement le sélecteur Cartes/Simple. Disponible uniquement sur le OnePlus 15.","name":"Animations du système"},"net_congestion":{"desc":"Comment le téléphone monte en débit lors d’un téléchargement — pour les réseaux que les deux cartes ci-dessous ne couvrent pas : partage USB, VPN, partage Bluetooth, Ethernet. Le Wi-Fi et le mobile prennent leurs valeurs dans les cartes ci-dessous. «bbr» s’adapte à la vitesse réelle, «cubic» est le classique. Sur un noyau d’origine bbr manque généralement, et la carte écrit honnêtement «non pris en charge».","name":"Démarrage des téléchargements · autres"},"net_qdisc":{"desc":"Comment le téléphone partage la connexion entre les applications — pour les réseaux que les deux cartes ci-dessous ne couvrent pas : partage USB, VPN, partage Bluetooth, adaptateur Ethernet. «fq_codel» convient à la plupart : la vidéo cesse de saccader quand quelque chose télécharge en arrière-plan. «cake» est le plus soigneux mais un peu plus lourd pour le processeur.","name":"File de paquets · autres"},"net_congestion_wifi":{"desc":"Accélération des téléchargements pour le Wi-Fi seulement. «Comme général» reprend la valeur de la carte au-dessus. Une valeur distincte sert quand Wi-Fi et mobile appellent des réponses différentes : ils fonctionnent en même temps sans se gêner.","name":"Démarrage des téléchargements · Wi-Fi"},"net_congestion_mobile":{"desc":"Accélération des téléchargements pour le mobile seulement. «Comme général» reprend la valeur de la carte au-dessus. Ici bbr l’emporte le plus souvent : sur une liaison radio, un paquet perdu signale une interférence et non un embouteillage, et cubic sacrifie du débit pour rien.","name":"Démarrage des téléchargements · mobile"},"net_qdisc_wifi":{"desc":"File d’attente des paquets pour le Wi-Fi seulement. «Comme général» reprend la valeur de la carte au-dessus. Indépendant du réseau mobile.","name":"File de paquets · Wi-Fi"},"net_qdisc_mobile":{"desc":"File d’attente des paquets pour le mobile seulement. «Comme général» reprend la valeur de la carte au-dessus. Indépendant du Wi-Fi.","name":"File de paquets · mobile"},"net_route_tune":{"descOpt":{"auto":"Smart: ASB measures the link and sizes the initial window for it.","off":"Stock. The route keeps the values Android set.","conservative":"Slightly larger window than stock.","aggressive":"Largest window. Best on a fast, stable link; can cost retransmits on a weak one."},"desc":"Combien de données partent d’un seul coup avant la première réponse. Le mode intelligent mesure votre liaison — débit, MTU, type de radio — et dimensionne la fenêtre : plus grande sur un lien rapide, valeur d’usine sur un lien faible, où une grosse rafale provoque justement les pertes qu’elle devait éviter.","name":"Tampons réseau"},"wifi_country":{"desc":"Détermine les canaux autorisés au téléphone, ce dont dépend la vitesse maximale. «CR» ouvre l’ensemble le plus large. L’usage de canaux non autorisés dans votre pays reste votre décision.","name":"Région Wi-Fi"},"wifi_scan_throttle":{"desc":"À quelle fréquence le téléphone cherche un meilleur point Wi-Fi. Retirez la limite si le Wi-Fi reste accroché à un point d’accès faible quand vous vous déplacez chez vous. Au prix d’un peu de batterie.","name":"Fréquence de recherche Wi-Fi"},"net_handover_fast":{"name":"Bascule rapide Wi‑Fi → données mobiles","desc":"Nécessite les contrôles cellulaire / radio ci-dessus. Garde le contexte de données mobiles prêt écran allumé, afin qu’Android puisse quitter un Wi‑Fi inutilisable sans attendre le modem. Ne déconnecte pas le Wi‑Fi, ne force pas la route mobile et ne modifie pas les seuils opérateur/itinérance. Écran éteint, save/night libèrent toujours le modem. Consomme un peu plus ; utilisez-le seulement si la vitesse de bascule est importante."},"haptic_strength":{"desc":"Intensité de la vibration pour les notifications et les sonneries, sur l’échelle du constructeur. «−1» ne touche à rien : ce qui est réglé dans le téléphone reste en place.","name":"Vibration"},"haptic_touch_strength":{"desc":"Intensité de la vibration pour le retour au toucher seulement : frappe, interrupteurs, gestes. Se règle indépendamment des notifications.","name":"Retour tactile"},"gms_freeze":{"descOpt":{"off":"Nothing is frozen. Play services behave as shipped.","safe":"Telemetry and reporting components only. Push, sign-in and payments keep working.","more":"Adds ads and measurement components. Reversible, but check anything you depend on."},"desc":"Désactive les composants de télémétrie, de rapport et de publicité à l’intérieur des services Google. Les services eux-mêmes restent actifs : push, connexion et paiements continuent de fonctionner. Entièrement réversible, mais vérifiez après activation ce dont vous dépendez.","name":"Geler les composants Google"},"athena_service":{"name":"Athena Background Killer","desc":"OxygenOS has its own background app killer - com.oplus.athena - and AthenaService is the part that decides what to kill. It is why a messenger left in the background stops delivering notifications until you reopen it, which no amount of battery whitelisting fixes because it is not Android's Doze doing it. Off disables that one component; the rest of the package keeps running, so thermal reporting and the settings panels are unaffected. Fully reversible: the previous state is recorded before anything changes and put back when you set this to stock or remove the module. Expect more RAM in use and slightly more drain - that is what keeping apps alive costs.","descOpt":{"stock":"OxygenOS keeps killing background apps as it normally does.","off":"AthenaService is disabled, so apps stay alive and keep notifying. Expect more RAM used and slightly more drain."}},"net_rps":{"name":"Spread Network Load","desc":"Quels cœurs traitent les paquets réseau entrants. L’origine laisse chaque paquet sur le cœur où l’interruption est arrivée, ce qui plafonne le débit en Wi-Fi rapide et maintient ce cœur haut. «Petits» répartit sur le groupe économe, «tous» utilise chaque cœur. Réveiller un second cœur coûte un peu de processeur : c’est rentable sur un lien rapide et perdant sur un lien lent.","descOpt":{"stock":"Every packet stays on the core its interrupt landed on - Android's own behaviour.","little":"Spread across the efficiency cluster. The safer of the two.","all":"Every core. Best throughput on fast WiFi, most CPU woken."}},"net_txqueue":{"name":"Transmit Queue","desc":"Combien de paquets peuvent attendre l’envoi. Les 1000 d’origine viennent d’un défaut de l’Ethernet filaire des années 1990 resté dans les pilotes sans fil ; sur une liaison aussi variable que le Wi-Fi, une file profonde ajoute plus de latence que de débit. Si les envois semblent plus lents, revenez à l’origine.","descOpt":{"stock":"1000 packets, as the driver ships.","short":"256. Less delay under load, same throughput on most links.","shorter":"128. Lowest latency; can cost throughput on a very fast link."}},"perf_ceiling_pct":{"name":"Plafond de performances","desc":"Quelle part de la limite du profil le téléphone peut atteindre. 100% laisse le profil tel quel.\n\nDes valeurs plus basses réduisent tous les plafonds proportionnellement : plus frais, plus d'autonomie, et plus lent là où vous attendez vraiment.\n\nMis à l'échelle depuis le profil plutôt que fixé par modèle : ses valeurs correspondent déjà à votre matériel.\n\nSeuls les plafonds bougent ; les planchers qui gardent le défilement et l'audio fluides ne sont pas touchés."},"wakelock_action":{"name":"Agir sur les wakelocks","desc":"Un wakelock, c'est une appli qui dit à Android « ne dors pas encore ». Une seule appli qui le fait toute la nuit coûte plus que tout ce que les réglages d'ici peuvent économiser.\n\nLa mesure est toujours active ; ceci décide si ASB intervient. Activé, une appli que vous avez installée et qui tient encore un wakelock après 45+ minutes d'écran éteint passe dans le bucket « restricted » d'Android.\n\nJamais touchés : les sources noyau et système, ni les applis d'authentification, téléphone, SMS, messagerie et horloge."},"night_modem_idle":{"name":"Quiet Radio at Night","desc":"Lets the modem settle during the hours the learner worked out from your own nights. A night capture showed the CPU was woken not by apps but by the network path: over a hundred resumes from IPA and rmnet. This stretches keepalive sixfold AND gates data-path wakeups at the rmnet level - top and bottom of the stack together. THE COST: a push notification may arrive at the next wake rather than instantly. Calls and SMS travel the modem's own channel and are untouched; radio power and airplane mode are never altered. Every change is recorded and restored on disable or uninstall."},"gnss_trim":{"name":"Réduire le GPS en arrière-plan","desc":"Le GPS est l'une des choses les plus coûteuses pour un téléphone. Android comptabilise séparément la part venant des processus EN CACHE : des applis fermées qui ne font rien de ce que vous avez demandé.\n\nDans un relevé, c'était 53 des 56 mAh de toute la consommation GPS.\n\nActivé, une appli qui retient la localisation pendant que son processus est en cache et l'écran éteint est limitée à une précision grossière. La précision complète revient dès que vous l'ouvrez.\n\nJamais touchées : cartes et navigation, fitness et suivi d'itinéraire, applis d'urgence et de localisation d'appareil."},"smart_media_guard":{"name":"Protection média Smart","desc":"Protection facultative réservée à Smart et à un cas précis : une application connue de vidéo, fil ou navigateur garde pendant une minute une charge CPU + GPU de type jeu sur batterie. ASB limite alors uniquement le plafond GPU effectif à l’enveloppe média existante de 70 %. Elle ne limite jamais un jeu connu, une application inconnue, la charge, la protection thermique, les plafonds CPU ou les fréquences minimales. Essayez d’abord 12 heures ; désactivez-la si un flux à haute fréquence saccade."},"net_handover_active":{"name":"Bascule active depuis un Wi‑Fi inutilisable","desc":"Nécessite les contrôles cellulaire / radio ci-dessus. Issue facultative pour une route Wi‑Fi qu’Android a marquée non validée. Seulement écran allumé, ASB coupe brièvement le Wi‑Fi lorsqu’il reste route par défaut sans internet validé ; les données mobiles peuvent alors prendre la route immédiatement. Le Wi‑Fi est réactivé après peu de temps et un délai empêche les boucles. Un signal faible seul ne déclenche jamais l’action ; opérateur/itinérance, type de réseau, Bluetooth et audio restent inchangés. Utilise les données mobiles ; laissez désactivé si des appareils Wi‑Fi locaux doivent rester continus."},"radio_policy_enable":{"name":"Contrôles cellulaire / radio","desc":"Commutateur maître indépendant des fonctions modem d’ASB. Désactivé par défaut : choisir un profil d’alimentation ne modifie ni le contexte de données mobiles Android ni TCP keepalive. C’est le réglage recommandé pour un appareil Wi‑Fi uniquement ou sans SIM. Activez-le seulement avec une SIM/eSIM si vous souhaitez volontairement les options radio séparées ci-dessous. Sa désactivation restaure immédiatement les valeurs Android enregistrées avant ASB ; mode avion, opérateur, itinérance, type de réseau préféré, Bluetooth et audio ne changent jamais."},"net_avoid_bad_wifi":{"name":"Quitter un Wi-Fi défaillant","desc":"Active l'interrupteur système qui bascule les données vers le réseau mobile quand un Wi-Fi cesse de fonctionner : un portail de connexion qui ne charge pas, un routeur sans internet, un réseau d'hôtel tombé.\n\nC'est le système qui bascule : la radio Wi-Fi reste connectée, rien n'est éteint, et il revient seul dès que le lien refonctionne.\n\nDifférence avec « Bascule active » ci-dessus : celle-ci coupe le Wi-Fi entièrement - plus rapide mais visible et brutal.\n\nVotre valeur d'origine est sauvegardée et restaurée."},"net_wifi_leave_rssi":{"name":"Quitter le Wi-Fi si le signal est faible","desc":"Normally ASB only releases a Wi-Fi network that has stopped working - one that answers but carries no traffic. That misses the case people notice: walking away from a hotspot. A router at the edge of range still replies, so the network stays valid while nothing loads.\n\nWith a threshold set, a weaker signal releases the route on its own. The same confirmation passes apply, so stepping behind a wall briefly does not trigger it.\n\n-85 dBm is where Wi-Fi has no usable speed left. -80 and -75 leave sooner.\n\nOff by default."},"bt_link_stability":{"name":"Stabilité du lien Bluetooth","desc":"For phones where Bluetooth headphones disconnect on their own during playback. Most devices never do this, so it is off by default.\n\nOn stable, Wi-Fi stops scanning for new networks while audio is playing: the 2.4 GHz band and Bluetooth share one antenna, and a scan sweeps the whole band - a stream that misses its slot disconnects.\n\nThe cost is that new Wi-Fi networks appear more slowly. Nothing else changes.\n\nNo codec is forced."}},"opt":{"3":"+3 dB","6":"+6 dB","9":"+9 dB","auto":"авто","on":"вкл","off":"выкл","safe":"безопасно","aggressive":"агрессивно","stock":"сток","disabled":"откл","mild":"умеренно","strong":"сильно","max":"макс","light":"слабо","medium":"средне","flat":"плоско","eq_compat":"под эквалайзер","hifi":"hi-fi","manual":"ручное","smart":"умное"},"optFor":{"doze_level":{"stock":"stock","night":"night only","moderate":"moderate","aggressive":"aggressive"},"log_level":{"0":"extreme","1":"normal","2":"detailed","3":"debug","stock":"stock"},"ui_effects_level":{"auto":"Auto","stock":"Normal","flat":"Simplified"},"dsp_outputs":{"all":"all","speaker":"speaker","wired":"USB","bt":"BT","speaker+wired":"speaker+USB","speaker+bt":"speaker+BT","wired+bt":"USB+BT"},"anim_speed":{"profile":"by profile","off":"off","fastest":"fastest","faster":"faster","fast":"fast","stock":"stock","slow":"slow","slower":"slowest"},"audio_remove_volume_limit":{"0":"keep limit","1":"remove limit"},"doze_trim_whitelist":{"0":"leave alone","1":"trim"},"gms_trim":{"stock":"stock","lite":"light","strict":"strict"},"phantom_procs":{"stock":"leave alone","relaxed":"no limit","strict":"limit 32"},"net_congestion":{"auto":"stock"},"net_qdisc":{"auto":"stock"},"net_route_tune":{"auto":"smart","off":"stock","conservative":"moderate","aggressive":"aggressive"},"wifi_country":{"auto":"stock"},"wifi_scan_throttle":{"0":"More often","1":"Less often","auto":"Stock"},"net_handover_fast":{"0":"Stock","1":"Rapide"},"net_congestion_wifi":{"auto":"as global"},"net_congestion_mobile":{"auto":"as global"},"net_qdisc_wifi":{"auto":"as global"},"net_qdisc_mobile":{"auto":"as global"},"gms_freeze":{"off":"off","safe":"safe","more":"more"},"athena_service":{"stock":"stock","off":"off"},"net_rps":{"stock":"stock","little":"little","all":"all"},"net_txqueue":{"stock":"stock","short":"short","shorter":"shorter"}},"prof_none":"non sélectionné","cfg_search":"Rechercher","cfg_search_none":"Aucun résultat","cfg_export":"↑ Exporter","cfg_import":"↓ Importer","cfg_import_confirm":"Encore ?","cfg_export_ok":"Enregistré dans ","cfg_export_err":"Écriture de la sauvegarde impossible","cfg_import_none":"Aucune sauvegarde","cfg_import_ok":"Restauré ","cfg_import_reboot":" — redémarrage requis","cfg_import_err":"Lecture de la sauvegarde impossible","cfg_language":"Langue","doze_edit":"Choisir les applis à garder exemptées","doze_loading":"Lecture de la liste…","doze_empty":"Aucune appli utilisateur n’est exemptée pour le moment.","doze_hint":"Les applis cochées restent hors veille profonde.","doze_err":"Lecture de la liste impossible","doze_saved":"Gardées ","smart_learning":"apprentissage · ","smart_sessions":" session(s)","smart_waiting":"démarrage · nécessite une session écran allumé","smart_ses_1":" session","smart_ses_2":" sessions","smart_ses_5":" sessions","t_cfg_blur":" · volet tout de suite, le reste après redémarrage","eta_measured":"mesuré","eta_modelled":"estimé","unit_h":"h","unit_m":"min","eta_measured_tip":"D’après la consommation mesurée récemment.","eta_modelled_tip":"Pas une mesure. Calcul d’après le niveau de charge et le profil.","cap_tip_asb":"Le governor maintient les plafonds qu’il a calculés.","cap_tip_clamp":"Le HAL thermique du constructeur bride en dessous de la demande.","cap_tip_raised":"Le constructeur a relevé le plafond au-dessus de la demande.","cap_tip_shell":"Plafonds écrits par le script de profil.","cap_tip_thermal":"Le plafond est piloté par la surcouche thermique.","cap_tip_unknown":"Impossible de lire la politique cpufreq.","hr_tip_fallback":"Source de secours (lecture de msm_performance).","hr_tip_real":"Marge réelle : scaling_max actuel par rapport au maximum matériel.","learn_active":"actif","learn_learning":"apprend","learn_nodata":"aucune donnée","learn_strong":"fiable","learn_tip_none":"Aucune session terminée pour ce profil pour l’instant.","lv_sessions_short":"ses","t_cfg_live":" · appliqué","t_prof_applied":" appliqué","grp_audio":"Audio","grp_camera":"Appareil photo","grp_iface":"Interface","grp_net":"Réseau","grp_battery":"Batterie","grp_ui":"Système","doze_not_exempt":"non exempté","smart_new_bucket":"apprend cette heure · ","smart_new_bucket_tail":" au total","cfg_smart_reset":"↺ Réinit.","t_smart_reset_confirm":"Appuyez encore pour effacer l'appris","t_smart_reset_done":"Apprentissage réinitialisé · Smart repart","t_smart_reset_fail":"Échec de la réinitialisation","st_on_trial":"à l'essai","st_not_accepted":"l'appareil ne l'a pas accepté","st_readback":"se relit différemment","trial_active":"À l'essai","trial_stock":"d'origine","trial_reverts_in":"retour dans","trial_keep":"Garder","trial_revert":"Annuler","trial_try":"Essayer 12 h","trial_started":"Essai lancé","trial_failed":"Impossible de lancer l'essai","trial_action_failed":"Action échouée","trial_no_preview":"Pas d'aperçu pour ce réglage.","trial_confirm_q":"Lancer un essai de 12 heures ? Il s'annule seul sans confirmation.","ledger_asked":"demandé","ledger_device_has":"l'appareil a","trial_expired_wait":"Essai expiré — restauration de la valeur précédente","cfg_profile_name":"Nom du profil","cfg_profile_invalid":"Utilisez 1 à 32 lettres, chiffres, _ ou -","cfg_profile_replace_q":"Ce profil existe déjà. Le remplacer ?","cfg_profile_saved":"Profil enregistré : ","cfg_profiles_none":"Aucun profil enregistré valide","cfg_profiles_choose":"Choisissez un profil :","cfg_profile_no_diff":"Aucun réglage ne changerait.","cfg_profile_preview":"Aperçu","cfg_profile_restore_q":"Restaurer ce profil ?","cfg_profile_restored":"Profil restauré : ","cfg_profile_save":"Enregistrer le profil","cfg_profile_load":"Charger le profil","cfg_profile_save_short":"↑ Enregistrer","cfg_profile_load_short":"↓ Ouvrir","cfg_profile_storage_hint":"Les profils sont enregistrés de façon sûre dans ASB ; choisissez un nom, pas un chemin.","cfg_audio_section_playback":"Lecture et Bluetooth","cfg_audio_section_playback_hint":"Choisissez le chemin audio et le comportement Bluetooth.","cfg_audio_section_dsp":"Moteur DSP ASB","cfg_audio_section_dsp_hint":"Traitement optionnel du gain, des basses et de la dynamique sur les sorties choisies.","cfg_audio_section_safety":"Protection de l’audition","cfg_audio_section_safety_hint":"La limite de protection auditive du système reste inchangée, sauf modification explicite.","t_quick_explain":"Le redémarrage rapide ne relance qu’Android ; les overlays exigent toujours un redémarrage complet.","t_quick_confirm":"Touchez à nouveau pour redémarrer Android rapidement","t_quick_going":"Redémarrage rapide d’Android…","t_quick_unavailable":"Le redémarrage rapide n’est pas disponible sur cette ROM ; utilisez le redémarrage complet.","dbg_diag_btn":"asbdiag","dbg_log_btn":"24h log","dbg_only":"Debug build only","dbg_diag_saved":"asbdiag saved","dbg_diag_failed":"Could not collect asbdiag","dbg_log_started":"24h log started","dbg_log_running":"24h log is already running","dbg_log_failed":"Could not start 24h log","cfg_profile_apply":"Appliquer la configuration enregistrée","cfg_profile_apply_hint":"Appliquer restaure tous les réglages enregistrés en une fois. Les copies Téléchargements/Documents sont vérifiées par somme de contrôle avant leur entrée dans ASB.","cfg_profile_delete":"Supprimer","cfg_profile_delete_confirm":"Supprimer maintenant","cfg_profile_export_err":"Enregistré dans ASB, mais copie vers l’emplacement choisi impossible","cfg_profile_keys":"réglages","cfg_profile_location":"Emplacement de stockage","cfg_profile_manager_title":"Configurations enregistrées","cfg_profile_name_hint":"Utilisez des lettres, chiffres, _ ou -. Un nom existant demande un second appui sur Remplacer.","cfg_profile_open_copy":"Sélectionnez une configuration enregistrée, puis appuyez sur Appliquer. Aucun nom de profil n’est à saisir.","cfg_profile_prepare_apply":"Préparer l’application","cfg_profile_replace":"Remplacer la configuration enregistrée","cfg_profile_replace_ready":"Touchez Remplacer pour écraser cette configuration enregistrée.","cfg_profile_save_action":"Enregistrer la configuration","cfg_profile_save_copy":"Enregistrez les réglages actuels et, si disponible, l’apprentissage Smart sous une configuration nommée. Vous pouvez aussi la copier dans Téléchargements ou Documents.","cfg_profile_smart_empty":"Pas encore d’apprentissage Smart","cfg_profile_smart_invalid":"Apprentissage Smart indisponible","cfg_profile_smart_other_device":"Apprentissage Smart : autre appareil","cfg_profile_smart_restored":" · apprentissage Smart restauré","cfg_profile_smart_saved":"Apprentissage Smart enregistré","cfg_profile_smart_saved_suffix":" · apprentissage Smart inclus","cfg_profile_smart_skipped_device":" · apprentissage Smart conservé : autre appareil","cfg_profile_smart_skipped_invalid":" · sauvegarde de l’apprentissage Smart non valide","cfg_profile_store_asb":"ASB","cfg_profile_store_documents":"Documents","cfg_profile_store_downloads":"Téléchargements","cfg_reset_all_copy":"Restaure les options Audio, Caméra, Interface, Réseau, Batterie et Système aux valeurs par défaut d’ASB.","cfg_reset_all_done":"Réglages de catégorie restaurés aux valeurs par défaut d’ASB","cfg_reset_all_fail":"Impossible de restaurer les réglages de catégorie","cfg_reset_all_title":"Réinitialiser tous les réglages de catégorie","cfg_reset_confirm":"Touchez encore une fois pour confirmer","cfg_reset_dialog_copy":"Choisissez précisément quoi réinitialiser. Rien ne change avant confirmation.","cfg_reset_dialog_title":"Réinitialiser","cfg_reset_smart_copy":"Conserve vos réglages de catégorie et efface seulement le comportement appris par Smart.","cfg_reset_smart_title":"Réinitialiser l’apprentissage Smart","prof_stock":"D’origine","prof_stock_sub":"Politique ASB désactivée","t_stock_applied":"Profil d’origine actif · politique ASB arrêtée","dbg_diag_wait":"asbdiag démarré · veuillez patienter","dbg_log_wait":"Le journal 24h démarre · veuillez patienter","stock_cpu_clock":"Fréquence CPU","stock_load":"Charge système","stock_battery":"Batterie","stock_uptime":"Temps de fonctionnement","cfg_profile_apply_active":"Application de la configuration enregistrée…","cfg_profile_apply_wait":"Veuillez patienter pendant qu’ASB restaure tous les réglages enregistrés. Ne fermez pas cette fenêtre.","t_stock_switching":"Origine sélectionné · restauration de la base ROM…","stock_battery_current":"Courant de batterie","stock_thermal_trend":"Tendance thermique ROM","stock_lpm_state":"État du modem","stock_ram_available":"RAM disponible","stock_rom_status":"État de la ROM","stock_asb_caps":"Limites ASB","stock_live_drain":"Courant de batterie","stock_live_battery":"Batterie en direct","stock_cap_owner":"Source de limite","stock_asb_learner":"Apprentissage ASB","stock_gpu_load":"Charge GPU","lv_vendor_period":"Période de limite constructeur","cap_period_active":"active · {time}","cap_period_none":"aucune limite constructeur active","cap_period_none_tip":"Aucune limite maintenue par le constructeur n’est active actuellement. Les échantillons historiques ne sont disponibles que dans les diagnostics détaillés.","cap_period_just_now":"à l’instant","cap_period_minutes":"{n} min","cap_period_hours_minutes":"{h} h {m} min","cap_period_tip":"Une période continue maintenue par le constructeur peut contenir de nombreux échantillons de sondage. Les échantillons bruts restent dans asbdiag et le rapport 24 h.","wb_handover_active":"Coupe brièvement le Wi‑Fi uniquement si Android signale que la route Wi‑Fi par défaut n’est pas validée. Cela peut utiliser les données mobiles et déconnecter brièvement des appareils Wi‑Fi locaux ; le Wi‑Fi revient automatiquement.","theme_dark":"Thème sombre","theme_light":"Thème clair","wb_radio_policy":"Active la politique distincte d’ASB pour contexte cellulaire et keepalive. Laissez-la désactivée sur un appareil Wi‑Fi uniquement ou sans SIM.","stock_load_now":"1 min","cfg_unavailable":"unavailable on this device","cfg_unavailable_why":"This phone does not expose: ","cfg_after_reboot":"applies after reboot","cfg_after_reboot_why":"Saved. Camera tone tables are rebuilt when the module starts."}
+{
+  "nav_live": "Moniteur",
+  "nav_config": "Réglages",
+  "nav_back": "Retour",
+  "sec_power": "Profil d’énergie",
+  "sec_live": "État en direct",
+  "sec_config": "Configuration",
+  "prof_smart": "Smart",
+  "prof_performance": "Performance",
+  "prof_balanced": "Équilibré",
+  "prof_battery": "Batterie",
+  "tag_alpha": "alpha",
+  "lv_alpha": "Alpha",
+  "lv_app": "Appli",
+  "lv_fsm": "FSM",
+  "lv_clamp": "Limites 1 h / total",
+  "lv_cpu": "Processeur",
+  "lv_skin": "Châssis",
+  "lv_hotspot": "Point chaud · interne",
+  "lv_est_on": "Est. écran",
+  "lv_est_idle": "Est. veille",
+  "lv_capsrc": "Origine de la limite",
+  "lv_learner": "Apprentissage",
+  "lv_gpuload": "Charge GPU",
+  "lv_headroom": "Marge",
+  "lv_lpm": "Modem LPM",
+  "lv_ses": "Sessions",
+  "lv_drain": "Consommation",
+  "lv_trend": "Tendance",
+  "lv_measuring": "mesure…",
+  "lv_trend_up": "chauffe",
+  "lv_trend_dn": "refroidit",
+  "lv_trend_fl": "stable",
+  "lv_lpm_normal": "normal",
+  "lv_lpm_normal_t": "valeur par défaut du profil",
+  "lv_lpm_save": "économie",
+  "lv_lpm_save_t": "la radio se met en veille, keepalive étiré",
+  "lv_lpm_fast": "rapide",
+  "lv_lpm_fast_t": "la connexion data est maintenue (faible latence)",
+  "cfg_apply_audio": "♫ Appliquer l’audio maintenant",
+  "st_mostly_on": "souvent actif",
+  "st_always_on": "toujours actif",
+  "wb_phantom": "Sans limite, l’arrière-plan vit plus longtemps — certaines applis consommeront de la batterie en fond",
+  "wb_doze": "Les notifications de messagerie et d’e-mail peuvent arriver en retard",
+  "wb_bgtrim": "Les applications redémarreront plus souvent quand vous y revenez",
+  "wb_blur": "Le volet et les menus deviennent opaques — l’effet de verre disparaît",
+  "wb_supgame": "Les jeux seront plus lents sur le profil Batterie",
+  "wb_dsp": "À gain élevé, distorsion possible sur la musique forte",
+  "wb_loud": "Volume maximal plus élevé — risque pour l’audition et pour le haut-parleur",
+  "wb_therm": "Un seuil bas bride la vitesse en permanence, pas seulement sous charge",
+  "wb_dozewl": "Les notifications des applications retirées peuvent arriver en retard",
+  "wb_vol": "L’avertissement de volume sûr est désactivé — risque pour l’audition",
+  "wb_gms": "En « strict », les notifications Google peuvent arriver en retard pendant la veille",
+  "wb_scan": "Le Wi-Fi cherche des réseaux plus souvent — la batterie se vide plus vite",
+  "wb_handover": "Les données mobiles restent prêtes écran allumé et consomment un peu plus de batterie",
+  "dsp_idle": "DSP désactivé",
+  "as_profile": "selon le profil",
+  "as_off": "désactivé",
+  "as_stock": "d’origine 1x",
+  "t_cfg_next": " · redémarrez l’application",
+  "t_pending_reboot": "↻ Modifications en attente de redémarrage",
+  "am_live": "⚡ s’applique immédiatement",
+  "am_next": "⏭ immédiat, mais il faut redémarrer l’application",
+  "am_reboot": "↻ redémarrage nécessaire",
+  "t_not_applied": "non appliqué",
+  "t_not_applied_hint": "Le réglage est enregistré, mais l’appareil ne l’a pas repris.",
+  "t_cfg_audio_live": " · application…",
+  "t_cfg_audio_reboot": " · redémarrage nécessaire",
+  "t_applying_audio": "Application de l’audio…",
+  "t_applied_audio": "Audio appliqué (audioserver redémarré)",
+  "t_apply_audio_fail": "Échec de l’application",
+  "cfg_reboot": "↻ Redémarrer l’appareil",
+  "st_unavail": "non pris en charge",
+  "st_failed": "non appliqué",
+  "st_pending": "en attente",
+  "cfg_soft_reboot": "⟳ Redémarrage rapide",
+  "cfg_restart_sysui": "▤ Redémarrer SystemUI",
+  "t_soft_confirm": "Encore une fois pour un redémarrage rapide",
+  "t_soft_going": "Redémarrage rapide…",
+  "t_sysui_going": "Redémarrage de SystemUI…",
+  "device_line": "Appareil OnePlus · Qualcomm Snapdragon",
+  "t_profile_err": "✗ Échec de l’application du profil",
+  "t_cfg_saved": " · redémarrage requis",
+  "cfg_camera_key_std": "Standard",
+  "cfg_camera_key_ext": "Étendu",
+  "t_cfg_err": "✗ Impossible d’écrire le réglage",
+  "t_reboot_confirm": "Appuyez à nouveau",
+  "t_rebooting": "Redémarrage…",
+  "cfg": {
+    "doze_trim_whitelist": {
+      "desc": "Retire vos applications de la liste des exemptions de veille profonde ; les applications système (téléphone, SMS, horloge, gestionnaire root) ne sont pas touchées. Le bouton ci-dessous montre quelles applications sont exemptées et permet de conserver celles dont vous avez besoin.",
+      "name": "Réduire les exemptions Doze"
+    },
+    "audio_remove_volume_limit": {
+      "desc": "Retire la limite de volume du casque imposée par la réglementation européenne. ATTENTION : une écoute prolongée à fort volume abîme l’audition. Désactivé par défaut pour cette raison.",
+      "name": "Limite de volume du casque"
+    },
+    "gms_trim": {
+      "descOpt": {
+        "stock": "Play services schedule background work as they like.",
+        "lite": "Fewer background jobs, nothing disabled.",
+        "strict": "Noticeably fewer. Some sync may be delayed."
+      },
+      "desc": "Restreint ce que les services Google peuvent faire en arrière-plan, sans rien désactiver. «Strict» réduit nettement : certaines synchronisations peuvent être retardées.",
+      "name": "Limiter les services Google"
+    },
+    "dsp_outputs": {
+      "desc": "Les sorties auxquelles s’applique l’effet DSP. Auparavant il s’accrochait à tout à la fois, si bien qu’un gain destiné au casque montait aussi le haut-parleur du téléphone, le moins apte à l’encaisser.",
+      "name": "Sorties du DSP"
+    },
+    "anim_speed": {
+      "desc": "À quelle vitesse le système dessine les transitions. «Selon le profil» correspond à l’ancien comportement : la vitesse était choisie par le profil d’énergie, la réactivité de l’interface était donc un effet secondaire d’un réglage de batterie. C’est désormais un choix à part.",
+      "name": "Vitesse des animations"
+    },
+    "phantom_procs": {
+      "descOpt": {
+        "stock": "Android's own limit applies - background child processes get killed.",
+        "relaxed": "No limit. Terminal sessions and background compiles survive.",
+        "strict": "Limit of 32. Fewer background processes than stock allows."
+      },
+      "desc": "La limite d’Android sur les processus enfants en arrière-plan — c’est elle qui tue les sessions de terminal et les compilations en cours de route. «Aucune limite» la retire entièrement.",
+      "name": "Limite de processus en arrière-plan"
+    },
+    "camera_hold_enable": {
+      "desc": "Pendant que la caméra diffuse, le governor cesse de baisser les fréquences et conserve les cœurs déjà occupés. C’est ce qui évite une image perdue dans une rafale ou une vidéo, au prix d’un peu de batterie tant que l’application reste ouverte. «Désactivé» laisse le governor brider la caméra comme n’importe quelle autre application.",
+      "name": "Maintenir les performances avec l’appareil photo"
+    },
+    "bt_a2dp_offload": {
+      "descOpt": {
+        "auto": "Hands off - whatever the ROM chose stays.",
+        "on": "Hardware encoding. Less battery, and usually what the phone ships with.",
+        "off": "CPU encoding. Needed for some equaliser apps to see the stream at all."
+      },
+      "desc": "Qui encode l’audio Bluetooth : le bloc matériel dédié ou le processeur. «Auto» n’intervient pas : ce que la ROM a choisi reste en place. «Activé» force l’encodage matériel (souvent identique au réglage d’usine, mais écrit ici par ASB). «Désactivé» déplace le travail sur le processeur, ce dont certains codecs et égaliseurs ont besoin pour fonctionner du tout.",
+      "name": "Déchargement audio Bluetooth"
+    },
+    "night_quiet_enable": {
+      "desc": "La nuit, quand l’écran est éteint depuis longtemps, le governor cesse son propre travail périodique et laisse l’appareil dormir plus profondément. C’est de là que vient l’essentiel de l’économie nocturne.",
+      "name": "Nuit calme"
+    },
+    "bat_suppress_gaming": {
+      "desc": "Dans le profil «Batterie», un jeu compte comme une charge lourde ordinaire et non comme une raison d’entrer en mode jeu. Le mode jeu relève les plafonds de fréquence, c’est-à-dire l’inverse de ce pour quoi on choisit «Batterie». Ne concerne que ce profil.",
+      "name": "Pas de mode jeu en profil Batterie"
+    },
+    "doze_level": {
+      "descOpt": {
+        "stock": "Android's own timing: idle begins 30 minutes after the screen goes off.",
+        "night": "Only during your learned sleep window. Daytime behaviour is untouched.",
+        "moderate": "Idle after 5 minutes. The change most people want.",
+        "aggressive": "Idle after 2 minutes, plus shorter sensing and locating windows. Apps that poll on their own can be late; high-priority push still arrives."
+      },
+      "desc": "À quelle vitesse Android place le téléphone en veille profonde après l’extinction de l’écran. L’origine attend 30 minutes — sur un téléphone repris en main toutes les quelques minutes, ces 30 minutes n’arrivent jamais. LE PRIX : en veille profonde, le système retient le réseau d’arrière-plan jusqu’à la prochaine fenêtre de maintenance ; une application qui interroge le serveur elle-même peut donc arriver en retard — les push prioritaires passent toujours.",
+      "name": "Sommeil profond"
+    },
+    "log_level": {
+      "descOpt": {
+        "0": "Extreme: cuts device logging as far as it goes. Saves writes and wakeups, and makes almost any bug report from this phone useless.",
+        "1": "Normal. Significant events only - what the module has always done.",
+        "2": "Detailed: adds learner updates and screen transitions. Turn this on before sending a battery log.",
+        "3": "Verbose. Fills the log fast; only while reproducing something.",
+        "stock": "ASB does not touch the device's logging at all."
+      },
+      "desc": "Combien le module écrit dans son journal et combien l’appareil journalise lui-même. «D’origine» est la seule valeur qui ne touche pas du tout à la journalisation du téléphone. «0» est extrême : il coupe journaux et sorties de débogage autant que possible, économise des écritures et des réveils — et rend presque inutile tout rapport d’anomalie venant de ce téléphone, y compris le nôtre.",
+      "name": "Détail des journaux"
+    },
+    "sustained_temp_mode": {
+      "descOpt": {
+        "stock": "This device's own trip point, read from its CPU thermal zone at boot.",
+        "smart": "Starts from that point and nudges it up when sessions heat quickly.",
+        "manual": "Exactly the temperature on the slider below. Nothing moves it."
+      },
+      "desc": "Quand ASB commence à retenir les performances pour garder le téléphone plus frais. «D’origine» utilise le point de déclenchement de votre appareil, lu au démarrage dans la zone thermique du processeur. «Intelligent» part de là et le relève de 2 degrés quand une session atteint la charge soutenue en moins d’une minute. «Manuel» fixe exactement la valeur du curseur ci-dessous.",
+      "name": "Point de bridage"
+    },
+    "sustained_temp_enter": {
+      "desc": "La température à laquelle ASB commence à retenir les performances. Plus bas signifie intervenir plus tôt : un téléphone plus frais qui ralentit plus tôt. IMPORTANT : une valeur inférieure à la température à laquelle le téléphone est simplement posé (généralement 38–48 °C) signifie que le bridage est TOUJOURS actif — fréquences plafonnées en permanence, le travail dure plus longtemps, et le téléphone finit plus chaud et plus vide, pas plus frais. D’où le minimum de 52 °C.",
+      "name": "Température de bridage"
+    },
+    "audio_profile": {
+      "desc": "Qui traite le son. «Compatible EQ» transmet le signal intact à un EQ/ViPER externe. «Hi-Fi» active UHQA quand aucun EQ n’est utilisé. «D’origine» ne garde que les réglages de base. S’applique sans redémarrage.",
+      "name": "Profil audio"
+    },
+    "audio_dac_hifi": {
+      "desc": "Configuration du codec, pas du logiciel : compandeurs du casque désactivés, HPH Mode → CLS_H_HIFI. N’entre pas en conflit avec un EQ externe : il lui offre un DAC plus propre. Redémarrage requis.",
+      "name": "DAC Hi-Fi (mixeur)"
+    },
+    "CAMERA_LEVEL": {
+      "desc": "Intensité de couleur, contraste et détail pour les photos et vidéos : 0 = d’origine, plus haut = plus saturé et contrasté. Fonctionne de façon RELATIVE : multiplie les valeurs réellement présentes dans votre ROM, sans dépendre des chiffres choisis par le constructeur.",
+      "name": "Traitement photo"
+    },
+    "CAMERA_GRAIN": {
+      "desc": "Après la réduction de bruit, l’appareil réintroduit du grain : une image parfaitement lisse paraît plastique. 3 est l’origine : plus bas pour un rendu net, plus haut pour une texture marquée, 0 supprime le grain entièrement.",
+      "name": "Grain argentique"
+    },
+    "CAMERA_CONTRAST": {
+      "desc": "Contraste et saturation de la courbe tonale. 3 correspond exactement à l’origine (100%), 0 est plus plat (70%), 6 nettement plus contrasté (130%). Indépendant du «Niveau de traitement», qui agit sur la matrice des couleurs.",
+      "name": "Contraste et profondeur de couleur"
+    },
+    "CAMERA_PORTRAIT": {
+      "desc": "Traitement neuronal des visages : la ROM d’usine le laisse désactivé (poids 0.0), on écrit donc ici des valeurs absolues et non un multiplicateur. Uniquement à la hausse : si la ROM contient déjà plus que le niveau demandé, rien ne change.",
+      "name": "IA portrait"
+    },
+    "CAMERA_LOWLIGHT": {
+      "desc": "Le macro et la faible lumière ont leur propre échelle de netteté, et c’est là que l’excès se voit le plus : sujets proches et ISO élevés accentuent les halos. 0 suit le traitement principal ; ne montez que si ces modes paraissent mous.",
+      "name": "Netteté macro et faible lumière"
+    },
+    "smart_battery_bias": {
+      "desc": "À quel point Smart penche vers l’autonomie. Plus haut, il garde les fréquences basses plus longtemps ; plus bas, il les libère plus tôt. À partir de 400, Smart se comporte presque comme «Batterie» même en usage actif.",
+      "name": "Inclinaison batterie Smart"
+    },
+    "CAMERA_AGGRESSIVE_INJECT": {
+      "desc": "SÛR : uniquement les clés de ton présentes. AGRESSIF injecte celles qui manquent (OnePlus 13/12) — risqué, revenez à SÛR en cas de problème."
+    },
+    "media_loudness": {
+      "desc": "Plus fort aux positions du curseur que vous utilisez vraiment : léger ≈+3 dB, fort ≈+6, maximum ≈+10. Ne touche ni les crans les plus bas, ni les alarmes, ni les sonneries, et ne peut pas saturer. Au maximum, le haut du curseur devient plus grossier. Redémarrage requis.",
+      "name": "Volume multimédia"
+    },
+    "dsp_loudness": {
+      "desc": "Gain de volume du moteur audio d’ASB, au-delà du maximum système. Le limiteur doux empêche la saturation : la sortie est bornée par construction, les décibels supplémentaires changent donc la densité du son, pas sa propreté.",
+      "name": "Gain DSP"
+    },
+    "dsp_bass": {
+      "desc": "Gain des basses fréquences par le même moteur. Agit sur la sortie choisie dans «Sorties DSP».",
+      "name": "Renfort de basses DSP"
+    },
+    "dsp_compressor": {
+      "desc": "Comprime la dynamique : les sons faibles deviennent audibles, les forts cessent de frapper. Utile en déplacement et dans la rue, superflu pour une écoute attentive à la maison.",
+      "name": "Compresseur DSP"
+    },
+    "bt_absvol_mode": {
+      "desc": "«D’origine» : une seule échelle, le curseur du téléphone déplace directement le volume du casque. «Désactiver» : échelles indépendantes, le téléphone applique son propre gain par-dessus celui du casque — c’est plus fort, et c’est ce dont ViPER et les égaliseurs ont besoin. Le prix : les échelles ne coïncident plus et sur certains casques les crans bas deviennent grossiers.",
+      "name": "Contrôle du volume Bluetooth"
+    },
+    "cool_gaming": {
+      "desc": "Dans les jeux, le seuil thermique intervient plus tôt : le téléphone reste plus frais au prix de quelques images. Utile lors des longues sessions, superflu pour les courtes.",
+      "name": "Jeu au frais"
+    },
+    "charge_aware_enable": {
+      "desc": "En charge, il accorde plus de marge ; en cas de chaleur, moins. Un téléphone branché n’a aucune raison d’économiser comme sur batterie.",
+      "name": "Mode charge"
+    },
+    "auto_battery_enable": {
+      "desc": "À 20% de charge, le profil bascule seul sur «Batterie» et revient à 21% après la recharge. Le chiffre du réglage correspond à celui de l’icône de batterie.",
+      "name": "Profil batterie automatique"
+    },
+    "BG_TRIM_LEVEL": {
+      "desc": "À quel point les applications en arrière-plan sont déchargées. «Sûr» reste prudent, «agressif» libère plus de mémoire au prix de quelques applications qui redémarrent au retour.",
+      "name": "Nettoyage de l’arrière-plan"
+    },
+    "UX_MANAGE_TIMEOUTS": {
+      "desc": "Performance raccourcit les animations (~0,8x) ainsi que les fenêtres d’appui long et de multi-appui pour la réactivité ; Batterie reste d’origine. DÉSACTIVÉ = ne toucher à rien.",
+      "name": "Gérer la vitesse de l’interface"
+    },
+    "UX_MANAGE_OEM_TOGGLES": {
+      "desc": "Autorise ASB à gérer les interrupteurs système d’OxygenOS : extension de RAM, optimisation de la batterie, gestion de la chaleur. DÉSACTIVÉ = ne pas y toucher du tout, et vos réglages restent les vôtres.",
+      "name": "Gérer les réglages du constructeur"
+    },
+    "UX_ANIM_FORCE_RESTART": {
+      "desc": "Presque jamais nécessaire. WindowManager relit les échelles d’animation juste après l’écriture : changer le réglage suffit. Cet interrupteur n’existe que pour recueillir des diagnostics.",
+      "name": "Forcer le redémarrage des animations"
+    },
+    "disable_blur": {
+      "desc": "Désactive le flou partout : volet, notifications, panneau de volume, transitions. Moins de charge GPU, le volet devient opaque au lieu de dépoli. À noter : la notification affichée perd aussi son fond flouté.",
+      "name": "Désactiver le flou"
+    },
+    "ui_effects_level": {
+      "descOpt": {
+        "auto": "Leave the system's own effect level alone.",
+        "stock": "Normal effects, as the device shipped.",
+        "flat": "Simplified. Recents becomes a plain list and OxygenOS hides the Cards/Simple selector entirely. OnePlus 15 only."
+      },
+      "desc": "À quel point le système dessine richement les transitions et les Récents. «Normaux» correspond à la sortie d’usine. «Simplifiés» utilise moins d’effets et un peu moins de GPU. IMPORTANT : en simplifié, les Récents deviennent une simple liste et OxygenOS SUPPRIME entièrement le sélecteur Cartes/Simple. Disponible uniquement sur le OnePlus 15.",
+      "name": "Animations du système"
+    },
+    "net_congestion": {
+      "desc": "Comment le téléphone monte en débit lors d’un téléchargement — pour les réseaux que les deux cartes ci-dessous ne couvrent pas : partage USB, VPN, partage Bluetooth, Ethernet. Le Wi-Fi et le mobile prennent leurs valeurs dans les cartes ci-dessous. «bbr» s’adapte à la vitesse réelle, «cubic» est le classique. Sur un noyau d’origine bbr manque généralement, et la carte écrit honnêtement «non pris en charge».",
+      "name": "Démarrage des téléchargements · autres"
+    },
+    "net_qdisc": {
+      "desc": "Comment le téléphone partage la connexion entre les applications — pour les réseaux que les deux cartes ci-dessous ne couvrent pas : partage USB, VPN, partage Bluetooth, adaptateur Ethernet. «fq_codel» convient à la plupart : la vidéo cesse de saccader quand quelque chose télécharge en arrière-plan. «cake» est le plus soigneux mais un peu plus lourd pour le processeur.",
+      "name": "File de paquets · autres"
+    },
+    "net_congestion_wifi": {
+      "desc": "Accélération des téléchargements pour le Wi-Fi seulement. «Comme général» reprend la valeur de la carte au-dessus. Une valeur distincte sert quand Wi-Fi et mobile appellent des réponses différentes : ils fonctionnent en même temps sans se gêner.",
+      "name": "Démarrage des téléchargements · Wi-Fi"
+    },
+    "net_congestion_mobile": {
+      "desc": "Accélération des téléchargements pour le mobile seulement. «Comme général» reprend la valeur de la carte au-dessus. Ici bbr l’emporte le plus souvent : sur une liaison radio, un paquet perdu signale une interférence et non un embouteillage, et cubic sacrifie du débit pour rien.",
+      "name": "Démarrage des téléchargements · mobile"
+    },
+    "net_qdisc_wifi": {
+      "desc": "File d’attente des paquets pour le Wi-Fi seulement. «Comme général» reprend la valeur de la carte au-dessus. Indépendant du réseau mobile.",
+      "name": "File de paquets · Wi-Fi"
+    },
+    "net_qdisc_mobile": {
+      "desc": "File d’attente des paquets pour le mobile seulement. «Comme général» reprend la valeur de la carte au-dessus. Indépendant du Wi-Fi.",
+      "name": "File de paquets · mobile"
+    },
+    "net_route_tune": {
+      "descOpt": {
+        "auto": "Smart: ASB measures the link and sizes the initial window for it.",
+        "off": "Stock. The route keeps the values Android set.",
+        "conservative": "Slightly larger window than stock.",
+        "aggressive": "Largest window. Best on a fast, stable link; can cost retransmits on a weak one."
+      },
+      "desc": "Combien de données partent d’un seul coup avant la première réponse. Le mode intelligent mesure votre liaison — débit, MTU, type de radio — et dimensionne la fenêtre : plus grande sur un lien rapide, valeur d’usine sur un lien faible, où une grosse rafale provoque justement les pertes qu’elle devait éviter.",
+      "name": "Tampons réseau"
+    },
+    "wifi_country": {
+      "desc": "Détermine les canaux autorisés au téléphone, ce dont dépend la vitesse maximale. «CR» ouvre l’ensemble le plus large. L’usage de canaux non autorisés dans votre pays reste votre décision.",
+      "name": "Région Wi-Fi"
+    },
+    "wifi_scan_throttle": {
+      "desc": "À quelle fréquence le téléphone cherche un meilleur point Wi-Fi. Retirez la limite si le Wi-Fi reste accroché à un point d’accès faible quand vous vous déplacez chez vous. Au prix d’un peu de batterie.",
+      "name": "Fréquence de recherche Wi-Fi"
+    },
+    "net_handover_fast": {
+      "name": "Bascule rapide Wi‑Fi → données mobiles",
+      "desc": "Nécessite les contrôles cellulaire / radio ci-dessus. Garde le contexte de données mobiles prêt écran allumé, afin qu’Android puisse quitter un Wi‑Fi inutilisable sans attendre le modem. Ne déconnecte pas le Wi‑Fi, ne force pas la route mobile et ne modifie pas les seuils opérateur/itinérance. Écran éteint, save/night libèrent toujours le modem. Consomme un peu plus ; utilisez-le seulement si la vitesse de bascule est importante."
+    },
+    "haptic_strength": {
+      "desc": "Intensité de la vibration pour les notifications et les sonneries, sur l’échelle du constructeur. «−1» ne touche à rien : ce qui est réglé dans le téléphone reste en place.",
+      "name": "Vibration"
+    },
+    "haptic_touch_strength": {
+      "desc": "Intensité de la vibration pour le retour au toucher seulement : frappe, interrupteurs, gestes. Se règle indépendamment des notifications.",
+      "name": "Retour tactile"
+    },
+    "gms_freeze": {
+      "descOpt": {
+        "off": "Nothing is frozen. Play services behave as shipped.",
+        "safe": "Telemetry and reporting components only. Push, sign-in and payments keep working.",
+        "more": "Adds ads and measurement components. Reversible, but check anything you depend on."
+      },
+      "desc": "Disables individual Google Play services components. Levels are cumulative. SAFE: telemetry, stats and analytics - nothing the phone needs. MORE: adds the ad identifier, location reporting and the backup scheduler. MAX: adds Icing indexing and background Fitness recording. THE COST OF MAX: in-app and system search will miss some results, and steps are not counted in the background. Push notifications are untouched at every level. Everything is restored by switching to off - each component's original state is recorded.",
+      "name": "Geler les composants Google"
+    },
+    "athena_service": {
+      "name": "Athena Background Killer",
+      "desc": "OxygenOS has its own background app killer - com.oplus.athena - and AthenaService is the part that decides what to kill. It is why a messenger left in the background stops delivering notifications until you reopen it, which no amount of battery whitelisting fixes because it is not Android's Doze doing it. Off disables that one component; the rest of the package keeps running, so thermal reporting and the settings panels are unaffected. Fully reversible: the previous state is recorded before anything changes and put back when you set this to stock or remove the module. Expect more RAM in use and slightly more drain - that is what keeping apps alive costs.",
+      "descOpt": {
+        "stock": "OxygenOS keeps killing background apps as it normally does.",
+        "off": "AthenaService is disabled, so apps stay alive and keep notifying. Expect more RAM used and slightly more drain."
+      }
+    },
+    "net_rps": {
+      "name": "Spread Network Load",
+      "desc": "Quels cœurs traitent les paquets réseau entrants. L’origine laisse chaque paquet sur le cœur où l’interruption est arrivée, ce qui plafonne le débit en Wi-Fi rapide et maintient ce cœur haut. «Petits» répartit sur le groupe économe, «tous» utilise chaque cœur. Réveiller un second cœur coûte un peu de processeur : c’est rentable sur un lien rapide et perdant sur un lien lent.",
+      "descOpt": {
+        "stock": "Every packet stays on the core its interrupt landed on - Android's own behaviour.",
+        "little": "Spread across the efficiency cluster. The safer of the two.",
+        "all": "Every core. Best throughput on fast WiFi, most CPU woken."
+      }
+    },
+    "net_txqueue": {
+      "name": "Transmit Queue",
+      "desc": "Combien de paquets peuvent attendre l’envoi. Les 1000 d’origine viennent d’un défaut de l’Ethernet filaire des années 1990 resté dans les pilotes sans fil ; sur une liaison aussi variable que le Wi-Fi, une file profonde ajoute plus de latence que de débit. Si les envois semblent plus lents, revenez à l’origine.",
+      "descOpt": {
+        "stock": "1000 packets, as the driver ships.",
+        "short": "256. Less delay under load, same throughput on most links.",
+        "shorter": "128. Lowest latency; can cost throughput on a very fast link."
+      }
+    },
+    "perf_ceiling_pct": {
+      "name": "Plafond de performances",
+      "desc": "Quelle part de la limite du profil le téléphone peut atteindre. 100% laisse le profil tel quel.\n\nDes valeurs plus basses réduisent tous les plafonds proportionnellement : plus frais, plus d'autonomie, et plus lent là où vous attendez vraiment.\n\nMis à l'échelle depuis le profil plutôt que fixé par modèle : ses valeurs correspondent déjà à votre matériel.\n\nSeuls les plafonds bougent ; les planchers qui gardent le défilement et l'audio fluides ne sont pas touchés."
+    },
+    "wakelock_action": {
+      "name": "Agir sur les wakelocks",
+      "desc": "Un wakelock, c'est une appli qui dit à Android « ne dors pas encore ». Une seule appli qui le fait toute la nuit coûte plus que tout ce que les réglages d'ici peuvent économiser.\n\nLa mesure est toujours active ; ceci décide si ASB intervient. Activé, une appli que vous avez installée et qui tient encore un wakelock après 45+ minutes d'écran éteint passe dans le bucket « restricted » d'Android.\n\nJamais touchés : les sources noyau et système, ni les applis d'authentification, téléphone, SMS, messagerie et horloge."
+    },
+    "night_modem_idle": {
+      "name": "Quiet Radio at Night",
+      "desc": "Lets the modem settle during the hours the learner worked out from your own nights. A night capture showed the CPU was woken not by apps but by the network path: over a hundred resumes from IPA and rmnet. This stretches keepalive sixfold AND gates data-path wakeups at the rmnet level - top and bottom of the stack together. THE COST: a push notification may arrive at the next wake rather than instantly. Calls and SMS travel the modem's own channel and are untouched; radio power and airplane mode are never altered. Every change is recorded and restored on disable or uninstall."
+    },
+    "gnss_trim": {
+      "name": "Réduire le GPS en arrière-plan",
+      "desc": "Le GPS est l'une des choses les plus coûteuses pour un téléphone. Android comptabilise séparément la part venant des processus EN CACHE : des applis fermées qui ne font rien de ce que vous avez demandé.\n\nDans un relevé, c'était 53 des 56 mAh de toute la consommation GPS.\n\nActivé, une appli qui retient la localisation pendant que son processus est en cache et l'écran éteint est limitée à une précision grossière. La précision complète revient dès que vous l'ouvrez.\n\nJamais touchées : cartes et navigation, fitness et suivi d'itinéraire, applis d'urgence et de localisation d'appareil."
+    },
+    "smart_media_guard": {
+      "name": "Protection média Smart",
+      "desc": "Protection facultative réservée à Smart et à un cas précis : une application connue de vidéo, fil ou navigateur garde pendant une minute une charge CPU + GPU de type jeu sur batterie. ASB limite alors uniquement le plafond GPU effectif à l’enveloppe média existante de 70 %. Elle ne limite jamais un jeu connu, une application inconnue, la charge, la protection thermique, les plafonds CPU ou les fréquences minimales. Essayez d’abord 12 heures ; désactivez-la si un flux à haute fréquence saccade."
+    },
+    "net_handover_active": {
+      "name": "Bascule active depuis un Wi‑Fi inutilisable",
+      "desc": "Nécessite les contrôles cellulaire / radio ci-dessus. Issue facultative pour une route Wi‑Fi qu’Android a marquée non validée. Seulement écran allumé, ASB coupe brièvement le Wi‑Fi lorsqu’il reste route par défaut sans internet validé ; les données mobiles peuvent alors prendre la route immédiatement. Le Wi‑Fi est réactivé après peu de temps et un délai empêche les boucles. Un signal faible seul ne déclenche jamais l’action ; opérateur/itinérance, type de réseau, Bluetooth et audio restent inchangés. Utilise les données mobiles ; laissez désactivé si des appareils Wi‑Fi locaux doivent rester continus."
+    },
+    "radio_policy_enable": {
+      "name": "Contrôles cellulaire / radio",
+      "desc": "Commutateur maître indépendant des fonctions modem d’ASB. Désactivé par défaut : choisir un profil d’alimentation ne modifie ni le contexte de données mobiles Android ni TCP keepalive. C’est le réglage recommandé pour un appareil Wi‑Fi uniquement ou sans SIM. Activez-le seulement avec une SIM/eSIM si vous souhaitez volontairement les options radio séparées ci-dessous. Sa désactivation restaure immédiatement les valeurs Android enregistrées avant ASB ; mode avion, opérateur, itinérance, type de réseau préféré, Bluetooth et audio ne changent jamais."
+    },
+    "net_avoid_bad_wifi": {
+      "name": "Quitter un Wi-Fi défaillant",
+      "desc": "Active l'interrupteur système qui bascule les données vers le réseau mobile quand un Wi-Fi cesse de fonctionner : un portail de connexion qui ne charge pas, un routeur sans internet, un réseau d'hôtel tombé.\n\nC'est le système qui bascule : la radio Wi-Fi reste connectée, rien n'est éteint, et il revient seul dès que le lien refonctionne.\n\nDifférence avec « Bascule active » ci-dessus : celle-ci coupe le Wi-Fi entièrement - plus rapide mais visible et brutal.\n\nVotre valeur d'origine est sauvegardée et restaurée."
+    },
+    "net_wifi_leave_rssi": {
+      "name": "Quitter le Wi-Fi si le signal est faible",
+      "desc": "Normally ASB only releases a Wi-Fi network that has stopped working - one that answers but carries no traffic. That misses the case people notice: walking away from a hotspot. A router at the edge of range still replies, so the network stays valid while nothing loads.\n\nWith a threshold set, a weaker signal releases the route on its own. The same confirmation passes apply, so stepping behind a wall briefly does not trigger it.\n\n-85 dBm is where Wi-Fi has no usable speed left. -80 and -75 leave sooner.\n\nOff by default."
+    },
+    "bt_link_stability": {
+      "name": "Stabilité du lien Bluetooth",
+      "desc": "For phones where Bluetooth headphones disconnect on their own during playback. Most devices never do this, so it is off by default.\n\nOn stable, Wi-Fi stops scanning for new networks while audio is playing: the 2.4 GHz band and Bluetooth share one antenna, and a scan sweeps the whole band - a stream that misses its slot disconnects.\n\nThe cost is that new Wi-Fi networks appear more slowly. Nothing else changes.\n\nNo codec is forced."
+    }
+  },
+  "opt": {
+    "3": "+3 dB",
+    "6": "+6 dB",
+    "9": "+9 dB",
+    "auto": "авто",
+    "on": "вкл",
+    "off": "выкл",
+    "safe": "безопасно",
+    "aggressive": "агрессивно",
+    "stock": "сток",
+    "disabled": "откл",
+    "mild": "умеренно",
+    "strong": "сильно",
+    "max": "макс",
+    "light": "слабо",
+    "medium": "средне",
+    "flat": "плоско",
+    "eq_compat": "под эквалайзер",
+    "hifi": "hi-fi",
+    "manual": "ручное",
+    "smart": "умное"
+  },
+  "optFor": {
+    "doze_level": {
+      "stock": "stock",
+      "night": "night only",
+      "moderate": "moderate",
+      "aggressive": "aggressive"
+    },
+    "log_level": {
+      "0": "extreme",
+      "1": "normal",
+      "2": "detailed",
+      "3": "debug",
+      "stock": "stock"
+    },
+    "ui_effects_level": {
+      "auto": "Auto",
+      "stock": "Normal",
+      "flat": "Simplified"
+    },
+    "dsp_outputs": {
+      "all": "all",
+      "speaker": "speaker",
+      "wired": "USB",
+      "bt": "BT",
+      "speaker+wired": "speaker+USB",
+      "speaker+bt": "speaker+BT",
+      "wired+bt": "USB+BT"
+    },
+    "anim_speed": {
+      "profile": "by profile",
+      "off": "off",
+      "fastest": "fastest",
+      "faster": "faster",
+      "fast": "fast",
+      "stock": "stock",
+      "slow": "slow",
+      "slower": "slowest"
+    },
+    "audio_remove_volume_limit": {
+      "0": "keep limit",
+      "1": "remove limit"
+    },
+    "doze_trim_whitelist": {
+      "0": "leave alone",
+      "1": "trim"
+    },
+    "gms_trim": {
+      "stock": "stock",
+      "lite": "light",
+      "strict": "strict"
+    },
+    "phantom_procs": {
+      "stock": "leave alone",
+      "relaxed": "no limit",
+      "strict": "limit 32"
+    },
+    "net_congestion": {
+      "auto": "stock"
+    },
+    "net_qdisc": {
+      "auto": "stock"
+    },
+    "net_route_tune": {
+      "auto": "smart",
+      "off": "stock",
+      "conservative": "moderate",
+      "aggressive": "aggressive"
+    },
+    "wifi_country": {
+      "auto": "stock"
+    },
+    "wifi_scan_throttle": {
+      "0": "More often",
+      "1": "Less often",
+      "auto": "Stock"
+    },
+    "net_handover_fast": {
+      "0": "Stock",
+      "1": "Rapide"
+    },
+    "net_congestion_wifi": {
+      "auto": "as global"
+    },
+    "net_congestion_mobile": {
+      "auto": "as global"
+    },
+    "net_qdisc_wifi": {
+      "auto": "as global"
+    },
+    "net_qdisc_mobile": {
+      "auto": "as global"
+    },
+    "gms_freeze": {
+      "off": "off",
+      "safe": "safe",
+      "more": "more"
+    },
+    "athena_service": {
+      "stock": "stock",
+      "off": "off"
+    },
+    "net_rps": {
+      "stock": "stock",
+      "little": "little",
+      "all": "all"
+    },
+    "net_txqueue": {
+      "stock": "stock",
+      "short": "short",
+      "shorter": "shorter"
+    }
+  },
+  "prof_none": "non sélectionné",
+  "cfg_search": "Rechercher",
+  "cfg_search_none": "Aucun résultat",
+  "cfg_export": "↑ Exporter",
+  "cfg_import": "↓ Importer",
+  "cfg_import_confirm": "Encore ?",
+  "cfg_export_ok": "Enregistré dans ",
+  "cfg_export_err": "Écriture de la sauvegarde impossible",
+  "cfg_import_none": "Aucune sauvegarde",
+  "cfg_import_ok": "Restauré ",
+  "cfg_import_reboot": " — redémarrage requis",
+  "cfg_import_err": "Lecture de la sauvegarde impossible",
+  "cfg_language": "Langue",
+  "doze_edit": "Choisir les applis à garder exemptées",
+  "doze_loading": "Lecture de la liste…",
+  "doze_empty": "Aucune appli utilisateur n’est exemptée pour le moment.",
+  "doze_hint": "Les applis cochées restent hors veille profonde.",
+  "doze_err": "Lecture de la liste impossible",
+  "doze_saved": "Gardées ",
+  "smart_learning": "apprentissage · ",
+  "smart_sessions": " session(s)",
+  "smart_waiting": "démarrage · nécessite une session écran allumé",
+  "smart_ses_1": " session",
+  "smart_ses_2": " sessions",
+  "smart_ses_5": " sessions",
+  "t_cfg_blur": " · volet tout de suite, le reste après redémarrage",
+  "eta_measured": "mesuré",
+  "eta_modelled": "estimé",
+  "unit_h": "h",
+  "unit_m": "min",
+  "eta_measured_tip": "D’après la consommation mesurée récemment.",
+  "eta_modelled_tip": "Pas une mesure. Calcul d’après le niveau de charge et le profil.",
+  "cap_tip_asb": "Le governor maintient les plafonds qu’il a calculés.",
+  "cap_tip_clamp": "Le HAL thermique du constructeur bride en dessous de la demande.",
+  "cap_tip_raised": "Le constructeur a relevé le plafond au-dessus de la demande.",
+  "cap_tip_shell": "Plafonds écrits par le script de profil.",
+  "cap_tip_thermal": "Le plafond est piloté par la surcouche thermique.",
+  "cap_tip_unknown": "Impossible de lire la politique cpufreq.",
+  "hr_tip_fallback": "Source de secours (lecture de msm_performance).",
+  "hr_tip_real": "Marge réelle : scaling_max actuel par rapport au maximum matériel.",
+  "learn_active": "actif",
+  "learn_learning": "apprend",
+  "learn_nodata": "aucune donnée",
+  "learn_strong": "fiable",
+  "learn_tip_none": "Aucune session terminée pour ce profil pour l’instant.",
+  "lv_sessions_short": "ses",
+  "t_cfg_live": " · appliqué",
+  "t_prof_applied": " appliqué",
+  "grp_audio": "Audio",
+  "grp_camera": "Appareil photo",
+  "grp_iface": "Interface",
+  "grp_net": "Réseau",
+  "grp_battery": "Batterie",
+  "grp_ui": "Système",
+  "doze_not_exempt": "non exempté",
+  "smart_new_bucket": "apprend cette heure · ",
+  "smart_new_bucket_tail": " au total",
+  "cfg_smart_reset": "↺ Réinit.",
+  "t_smart_reset_confirm": "Appuyez encore pour effacer l'appris",
+  "t_smart_reset_done": "Apprentissage réinitialisé · Smart repart",
+  "t_smart_reset_fail": "Échec de la réinitialisation",
+  "st_on_trial": "à l'essai",
+  "st_not_accepted": "l'appareil ne l'a pas accepté",
+  "st_readback": "se relit différemment",
+  "trial_active": "À l'essai",
+  "trial_stock": "d'origine",
+  "trial_reverts_in": "retour dans",
+  "trial_keep": "Garder",
+  "trial_revert": "Annuler",
+  "trial_try": "Essayer 12 h",
+  "trial_started": "Essai lancé",
+  "trial_failed": "Impossible de lancer l'essai",
+  "trial_action_failed": "Action échouée",
+  "trial_no_preview": "Pas d'aperçu pour ce réglage.",
+  "trial_confirm_q": "Lancer un essai de 12 heures ? Il s'annule seul sans confirmation.",
+  "ledger_asked": "demandé",
+  "ledger_device_has": "l'appareil a",
+  "trial_expired_wait": "Essai expiré — restauration de la valeur précédente",
+  "cfg_profile_name": "Nom du profil",
+  "cfg_profile_invalid": "Utilisez 1 à 32 lettres, chiffres, _ ou -",
+  "cfg_profile_replace_q": "Ce profil existe déjà. Le remplacer ?",
+  "cfg_profile_saved": "Profil enregistré : ",
+  "cfg_profiles_none": "Aucun profil enregistré valide",
+  "cfg_profiles_choose": "Choisissez un profil :",
+  "cfg_profile_no_diff": "Aucun réglage ne changerait.",
+  "cfg_profile_preview": "Aperçu",
+  "cfg_profile_restore_q": "Restaurer ce profil ?",
+  "cfg_profile_restored": "Profil restauré : ",
+  "cfg_profile_save": "Enregistrer le profil",
+  "cfg_profile_load": "Charger le profil",
+  "cfg_profile_save_short": "↑ Enregistrer",
+  "cfg_profile_load_short": "↓ Ouvrir",
+  "cfg_profile_storage_hint": "Les profils sont enregistrés de façon sûre dans ASB ; choisissez un nom, pas un chemin.",
+  "cfg_audio_section_playback": "Lecture et Bluetooth",
+  "cfg_audio_section_playback_hint": "Choisissez le chemin audio et le comportement Bluetooth.",
+  "cfg_audio_section_dsp": "Moteur DSP ASB",
+  "cfg_audio_section_dsp_hint": "Traitement optionnel du gain, des basses et de la dynamique sur les sorties choisies.",
+  "cfg_audio_section_safety": "Protection de l’audition",
+  "cfg_audio_section_safety_hint": "La limite de protection auditive du système reste inchangée, sauf modification explicite.",
+  "t_quick_explain": "Le redémarrage rapide ne relance qu’Android ; les overlays exigent toujours un redémarrage complet.",
+  "t_quick_confirm": "Touchez à nouveau pour redémarrer Android rapidement",
+  "t_quick_going": "Redémarrage rapide d’Android…",
+  "t_quick_unavailable": "Le redémarrage rapide n’est pas disponible sur cette ROM ; utilisez le redémarrage complet.",
+  "dbg_diag_btn": "asbdiag",
+  "dbg_log_btn": "24h log",
+  "dbg_only": "Debug build only",
+  "dbg_diag_saved": "asbdiag saved",
+  "dbg_diag_failed": "Could not collect asbdiag",
+  "dbg_log_started": "24h log started",
+  "dbg_log_running": "24h log is already running",
+  "dbg_log_failed": "Could not start 24h log",
+  "cfg_profile_apply": "Appliquer la configuration enregistrée",
+  "cfg_profile_apply_hint": "Appliquer restaure tous les réglages enregistrés en une fois. Les copies Téléchargements/Documents sont vérifiées par somme de contrôle avant leur entrée dans ASB.",
+  "cfg_profile_delete": "Supprimer",
+  "cfg_profile_delete_confirm": "Supprimer maintenant",
+  "cfg_profile_export_err": "Enregistré dans ASB, mais copie vers l’emplacement choisi impossible",
+  "cfg_profile_keys": "réglages",
+  "cfg_profile_location": "Emplacement de stockage",
+  "cfg_profile_manager_title": "Configurations enregistrées",
+  "cfg_profile_name_hint": "Utilisez des lettres, chiffres, _ ou -. Un nom existant demande un second appui sur Remplacer.",
+  "cfg_profile_open_copy": "Sélectionnez une configuration enregistrée, puis appuyez sur Appliquer. Aucun nom de profil n’est à saisir.",
+  "cfg_profile_prepare_apply": "Préparer l’application",
+  "cfg_profile_replace": "Remplacer la configuration enregistrée",
+  "cfg_profile_replace_ready": "Touchez Remplacer pour écraser cette configuration enregistrée.",
+  "cfg_profile_save_action": "Enregistrer la configuration",
+  "cfg_profile_save_copy": "Enregistrez les réglages actuels et, si disponible, l’apprentissage Smart sous une configuration nommée. Vous pouvez aussi la copier dans Téléchargements ou Documents.",
+  "cfg_profile_smart_empty": "Pas encore d’apprentissage Smart",
+  "cfg_profile_smart_invalid": "Apprentissage Smart indisponible",
+  "cfg_profile_smart_other_device": "Apprentissage Smart : autre appareil",
+  "cfg_profile_smart_restored": " · apprentissage Smart restauré",
+  "cfg_profile_smart_saved": "Apprentissage Smart enregistré",
+  "cfg_profile_smart_saved_suffix": " · apprentissage Smart inclus",
+  "cfg_profile_smart_skipped_device": " · apprentissage Smart conservé : autre appareil",
+  "cfg_profile_smart_skipped_invalid": " · sauvegarde de l’apprentissage Smart non valide",
+  "cfg_profile_store_asb": "ASB",
+  "cfg_profile_store_documents": "Documents",
+  "cfg_profile_store_downloads": "Téléchargements",
+  "cfg_reset_all_copy": "Restaure les options Audio, Caméra, Interface, Réseau, Batterie et Système aux valeurs par défaut d’ASB.",
+  "cfg_reset_all_done": "Réglages de catégorie restaurés aux valeurs par défaut d’ASB",
+  "cfg_reset_all_fail": "Impossible de restaurer les réglages de catégorie",
+  "cfg_reset_all_title": "Réinitialiser tous les réglages de catégorie",
+  "cfg_reset_confirm": "Touchez encore une fois pour confirmer",
+  "cfg_reset_dialog_copy": "Choisissez précisément quoi réinitialiser. Rien ne change avant confirmation.",
+  "cfg_reset_dialog_title": "Réinitialiser",
+  "cfg_reset_smart_copy": "Conserve vos réglages de catégorie et efface seulement le comportement appris par Smart.",
+  "cfg_reset_smart_title": "Réinitialiser l’apprentissage Smart",
+  "prof_stock": "D’origine",
+  "prof_stock_sub": "Politique ASB désactivée",
+  "t_stock_applied": "Profil d’origine actif · politique ASB arrêtée",
+  "dbg_diag_wait": "asbdiag démarré · veuillez patienter",
+  "dbg_log_wait": "Le journal 24h démarre · veuillez patienter",
+  "stock_cpu_clock": "Fréquence CPU",
+  "stock_load": "Charge système",
+  "stock_battery": "Batterie",
+  "stock_uptime": "Temps de fonctionnement",
+  "cfg_profile_apply_active": "Application de la configuration enregistrée…",
+  "cfg_profile_apply_wait": "Veuillez patienter pendant qu’ASB restaure tous les réglages enregistrés. Ne fermez pas cette fenêtre.",
+  "t_stock_switching": "Origine sélectionné · restauration de la base ROM…",
+  "stock_battery_current": "Courant de batterie",
+  "stock_thermal_trend": "Tendance thermique ROM",
+  "stock_lpm_state": "État du modem",
+  "stock_ram_available": "RAM disponible",
+  "stock_rom_status": "État de la ROM",
+  "stock_asb_caps": "Limites ASB",
+  "stock_live_drain": "Courant de batterie",
+  "stock_live_battery": "Batterie en direct",
+  "stock_cap_owner": "Source de limite",
+  "stock_asb_learner": "Apprentissage ASB",
+  "stock_gpu_load": "Charge GPU",
+  "lv_vendor_period": "Période de limite constructeur",
+  "cap_period_active": "active · {time}",
+  "cap_period_none": "aucune limite constructeur active",
+  "cap_period_none_tip": "Aucune limite maintenue par le constructeur n’est active actuellement. Les échantillons historiques ne sont disponibles que dans les diagnostics détaillés.",
+  "cap_period_just_now": "à l’instant",
+  "cap_period_minutes": "{n} min",
+  "cap_period_hours_minutes": "{h} h {m} min",
+  "cap_period_tip": "Une période continue maintenue par le constructeur peut contenir de nombreux échantillons de sondage. Les échantillons bruts restent dans asbdiag et le rapport 24 h.",
+  "wb_handover_active": "Coupe brièvement le Wi‑Fi uniquement si Android signale que la route Wi‑Fi par défaut n’est pas validée. Cela peut utiliser les données mobiles et déconnecter brièvement des appareils Wi‑Fi locaux ; le Wi‑Fi revient automatiquement.",
+  "theme_dark": "Thème sombre",
+  "theme_light": "Thème clair",
+  "wb_radio_policy": "Active la politique distincte d’ASB pour contexte cellulaire et keepalive. Laissez-la désactivée sur un appareil Wi‑Fi uniquement ou sans SIM.",
+  "stock_load_now": "1 min",
+  "cfg_unavailable": "unavailable on this device",
+  "cfg_unavailable_why": "This phone does not expose: ",
+  "cfg_after_reboot": "applies after reboot",
+  "cfg_after_reboot_why": "Saved. Camera tone tables are rebuilt when the module starts."
+}
