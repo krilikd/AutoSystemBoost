@@ -573,7 +573,8 @@ static void asb_smart_store_seed_defaults(asb_smart_store_t *st) {
 static int asb_smart_store_validate(const asb_smart_store_t *st) {
     if (!st) return -1;
     if (st->magic != ASB_SMART_MAGIC) return -2;
-    if (st->version != ASB_SMART_VER) return -3;
+    /* Accept the previous schema: the loader migrates it in place. */
+    if (st->version != ASB_SMART_VER && st->version != ASB_SMART_VER_LEGACY) return -3;
     if (st->bucket_count != ASB_SMART_BUCKETS) return -4;
     for (int i = 0; i < ASB_SMART_BUCKETS; i++) {
         if (st->buckets[i].bucket_id != (uint32_t)i) return -5;
@@ -654,11 +655,34 @@ typedef struct {
     int seeded;
 } asb_smart_load_outcome_t;
 
+/* Carry a V63 store forward: keep what was measured, drop what was concluded.
+ *
+ * Only the three learned outputs are reset. Their neutral values are the same ones a
+ * fresh bucket starts with, so a migrated bucket behaves exactly like an unlearned one
+ * of the same age - and re-learns from its own history rather than from zero.
+ *
+ * eff_obs is kept deliberately: those observations were real, and requiring them to be
+ * earned again would leave every existing user on cold-start ceilings for days.
+ */
+static void asb_smart_store_migrate(asb_smart_store_t *st) {
+    if (!st || st->version == ASB_SMART_VER) return;
+    for (int i = 0; i < ASB_SMART_BUCKETS; i++) {
+        /* The same neutral values a fresh runtime starts with - taken from the
+         * initialiser rather than guessed, so a migrated bucket and a new one behave
+         * identically before either has learned anything. */
+        st->buckets[i].alpha_battery_x1000    = 500;
+        st->buckets[i].sleep_bias_x1000       = 100;
+        st->buckets[i].net_conservative_x1000 = 300;
+    }
+    st->version = ASB_SMART_VER;
+}
+
 static int asb_smart_store_load(asb_smart_store_t *st, asb_smart_load_outcome_t *out) {
     if (!st) return -1;
     asb_smart_load_outcome_t local = {0,0,0,0};
     int rc = asb_smart_store_load_from(ASB_SMART_STORE_FILE, st);
     if (rc == 0) {
+        asb_smart_store_migrate(st);
         local.loaded_from_main = 1;
         if (out) *out = local;
         return 0;

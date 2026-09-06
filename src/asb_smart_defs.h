@@ -3,7 +3,20 @@
 
 #include <stdint.h>
 
-#define ASB_SMART_VER         1
+/* Bumped for V64: the learner's sign was inverted before this release.
+ *
+ * Warm buckets had been taught to RAISE the ceiling, and a heavy-drain bucket the same -
+ * so the stored alpha, sleep bias and network conservatism are not merely stale, they are
+ * pointing the wrong way. Carrying them forward would start V64 with a model actively
+ * working against the thing it is supposed to optimise.
+ *
+ * The MEASUREMENTS in each bucket are unaffected - a thermometer reading is a
+ * thermometer reading whatever was done with it - so the migration below keeps them and
+ * resets only the conclusions. That leaves the phone with its own history intact and the
+ * learner starting from neutral rather than from wrong.
+ */
+#define ASB_SMART_VER         2
+#define ASB_SMART_VER_LEGACY  1
 #define ASB_SMART_MAGIC       0x41534253u
 #define ASB_SMART_BUCKETS     12
 #define ASB_SMART_DAYPARTS    6
