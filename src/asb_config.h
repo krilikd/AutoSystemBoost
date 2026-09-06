@@ -528,7 +528,20 @@ static inline void asb_cfg_apply_kv(asb_runtime_config_t *c, const char *k, cons
     else if (!strcmp(k, "quiet_exit_grace"))      c->quiet_exit_grace = atoi(v);
     else if (!strcmp(k, "bat_comfort_temp"))      c->bat_comfort_temp = atoi(v);
     else if (!strcmp(k, "clamp_economy_after_s")) c->clamp_economy_after_s = atoi(v);
-    else if (!strcmp(k, "clamp_thermal_every_n")) c->clamp_thermal_every_n = atoi(v);
+    else if (!strcmp(k, "clamp_thermal_every_n")) {
+        /* Clamped, because this value is used as a modulus.
+         *
+         * atoi("0") is 0, and the governor does `skip % clamp_thermal_every_n` - integer
+         * division by zero, which is a crash, not a bad reading. Anyone editing the config
+         * by hand can reach it, and a truncated or corrupt file reaches it by accident.
+         *
+         * 1 means "every tick", which is the safe end of this setting: it costs reads and
+         * changes no behaviour. 60 is well past any useful skip interval. */
+        int _cn = atoi(v);
+        if (_cn < 1)  _cn = 1;
+        if (_cn > 60) _cn = 60;
+        c->clamp_thermal_every_n = _cn;
+    }
     else if (!strcmp(k, "action_waste_threshold"))c->action_waste_threshold = atoi(v);
     else if (!strcmp(k, "virtual_ceiling_alpha")) c->virtual_ceiling_alpha = atoi(v);
     else if (!strcmp(k, "balanced_heavy_load_enter"))    c->balanced_heavy_load_enter = (float)atof(v);

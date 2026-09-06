@@ -1492,6 +1492,33 @@ static int metrics_screen_on(void) {
     int bl = sysfs_read_int(PATH_BACKLIGHT, -1);
     if (bl > 0) return 1;
     if (bl == 0) return 0;
+
+    /* All three sources above are OPlus paths. A ROM that names them differently reached
+     * the fallback and got "screen on" forever - which means DEEP_IDLE is never entered,
+     * the tick cadence never drops to its idle tiers, and quiet night never arms. The
+     * module runs at screen-on cost around the clock on a phone that is asleep.
+     *
+     * The generic backlight class is the portable spelling of the same thing: any device
+     * with a panel exposes at least one entry under /sys/class/backlight. Trying it before
+     * giving up covers ROMs the vendor paths do not.
+     */
+    {
+        static const char *generic_bl[] = {
+            "/sys/class/backlight/panel-backlight/brightness",
+            "/sys/class/backlight/backlight/brightness",
+            "/sys/class/leds/lcd-backlight/brightness",
+            NULL
+        };
+        for (int i = 0; generic_bl[i]; i++) {
+            int g = sysfs_read_int(generic_bl[i], -1);
+            if (g > 0) return 1;
+            if (g == 0) return 0;
+        }
+    }
+
+    /* Still nothing readable. "On" remains the safe default - treating an unknown screen
+     * as off would let the module apply screen-off ceilings while someone is using the
+     * phone, and a stutter is worse than a missed saving. */
     return 1;
 }
 
