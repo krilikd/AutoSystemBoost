@@ -2695,29 +2695,49 @@ asb_prune_module() {
   find "$MODPATH/system" -type d -empty -print -delete 2>/dev/null || true
 }
 
-ASB_AUDIO=true
-ASB_BT=true
-ASB_NFC=true
-ASB_CAMERA=true
-ASB_MEDIA=true
-ASB_CPU=true
-ASB_VM=true
-ASB_NET=true
-ASB_WIFI=true
-ASB_GPS=true
-ASB_KERNEL=true
-ASB_LOG=true
-ASB_RADIO_IMS=true
-ASB_DISPLAY=true
-ASB_FPS=true
-ASB_SECURITY=true
-ASB_BG_TRIM=true
+# Defaults, overridden below by whatever the shipped features.conf says.
+#
+# These were plain `true` and the generated features.conf is written from them, so the
+# file in the ZIP was overwritten on every install. A build that deliberately ships
+# BT=0 or VENDOR_OVERLAY=0 - which this one does, for eight features - had that choice
+# silently reversed, and the installed module ran with everything on.
+#
+# Reading the shipped file first makes it the source of truth it was meant to be: a
+# packager can disable a feature for a build, and the installer honours it.
+_asb_feat_from_zip() {
+  _ff="$MODPATH/features.conf"
+  [ -f "$_ff" ] || return 0
+  _fv="$(grep -E "^[[:space:]]*$1=" "$_ff" 2>/dev/null | head -1 | sed 's/.*=//' | tr -d ' \r' | cut -d'#' -f1)"
+  case "$_fv" in
+    0) printf 'false' ;;
+    1) printf 'true' ;;
+    *) printf '%s' "$2" ;;
+  esac
+}
+
+ASB_AUDIO="$(_asb_feat_from_zip AUDIO true)"
+ASB_BT="$(_asb_feat_from_zip BT true)"
+ASB_NFC="$(_asb_feat_from_zip NFC true)"
+ASB_CAMERA="$(_asb_feat_from_zip CAMERA true)"
+ASB_MEDIA="$(_asb_feat_from_zip MEDIA true)"
+ASB_CPU="$(_asb_feat_from_zip CPU true)"
+ASB_VM="$(_asb_feat_from_zip VM true)"
+ASB_NET="$(_asb_feat_from_zip NET true)"
+ASB_WIFI="$(_asb_feat_from_zip WIFI true)"
+ASB_GPS="$(_asb_feat_from_zip GPS true)"
+ASB_KERNEL="$(_asb_feat_from_zip KERNEL true)"
+ASB_LOG="$(_asb_feat_from_zip LOG true)"
+ASB_RADIO_IMS="$(_asb_feat_from_zip RADIO_IMS true)"
+ASB_DISPLAY="$(_asb_feat_from_zip DISPLAY true)"
+ASB_FPS="$(_asb_feat_from_zip FPS true)"
+ASB_SECURITY="$(_asb_feat_from_zip SECURITY true)"
+ASB_BG_TRIM="$(_asb_feat_from_zip BG_TRIM true)"
 # These two had no variable at all: features.conf hardcoded LPM=1 / VENDOR_OVERLAY=1 while
 # asb_save_user_config wrote LPM=0 / VENDOR_OVERLAY=0 - it evaluated a variable that did not
 # exist, so it recorded a phantom "the user declined" that no user ever chose, and the
 # end-of-install banner left both out of the enabled list while both were in fact running.
-ASB_LPM=true
-ASB_VENDOR_OVERLAY=true
+ASB_LPM="$(_asb_feat_from_zip LPM true)"
+ASB_VENDOR_OVERLAY="$(_asb_feat_from_zip VENDOR_OVERLAY true)"
 
 asb_install_prebuilt_governor
 asb_big_banner
