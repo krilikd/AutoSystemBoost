@@ -1038,7 +1038,18 @@ static void asb_smart_compute_effective(
                 int over = t_c10 - warm_x10;              /* tenths of a degree */
                 int lean = (over * ASB_SMART_THERM_LEAN_PER_DEG) / 10;
                 if (lean > ASB_SMART_THERM_LEAN_MAX) lean = ASB_SMART_THERM_LEAN_MAX;
-                alpha -= lean;
+                /* Warmer means lean HARDER toward Battery, so alpha goes up.
+                 *
+                 * The blend is (battery*alpha + balanced*(1000-alpha))/1000, and the
+                 * Battery bounds are the lower ones - so a bigger alpha is a lower ceiling.
+                 * Subtracting here moved the phone toward Balanced every time it ran warm:
+                 * a bucket at 500 dropped to 440 and the ceiling ROSE, which is the
+                 * opposite of what a thermal lean is for.
+                 *
+                 * The variable is still called lean because that is what it measures - how
+                 * far over the warm threshold this bucket sits. Only the direction it is
+                 * applied in was wrong. */
+                alpha += lean;
             /* A bucket that has never run warm has headroom the generic tuning does not
              * know about - give a little of it back rather than staying cautious out of
              * habit. Deliberately smaller than the penalty: being wrong about cool costs
@@ -1047,7 +1058,8 @@ static void asb_smart_compute_effective(
                 int under = cool_x10 - t_c10;
                 int gain  = (under * ASB_SMART_THERM_GAIN_PER_DEG) / 10;
                 if (gain > ASB_SMART_THERM_GAIN_MAX) gain = ASB_SMART_THERM_GAIN_MAX;
-                alpha += gain;
+                /* Cooler means the phone can afford Balanced: alpha down, ceiling up. */
+                alpha -= gain;
             }
         }
         /* Drain history: a bucket that historically burns battery fast gets a nudge the
@@ -1058,7 +1070,11 @@ static void asb_smart_compute_effective(
             int over = d_x10 - ASB_SMART_DRAIN_HEAVY_X10;
             int lean = (over * ASB_SMART_DRAIN_LEAN_PER_PCT) / 10;
             if (lean > ASB_SMART_DRAIN_LEAN_MAX) lean = ASB_SMART_DRAIN_LEAN_MAX;
-            alpha -= lean;
+            /* Heavy drain means lean toward Battery: alpha up, ceiling down.
+             * Same inversion as the thermal branch above - a bucket that was draining hard
+             * had its ceiling raised, which makes the next sample worse and the one after
+             * that worse still. */
+            alpha += lean;
         }
     }
 
