@@ -2408,6 +2408,23 @@ ASB_CONFIG_MIGRATED_COUNT=0
 
 asb_preserve_user_config() {
   _new_conf="$MODPATH/config/governor.conf"
+  # Only create the shipped copy if the package did not bring one.
+  #
+  # This copied the ACTIVE config over the reference copy, and by this point the active
+  # config is the user's - migrated from the previous install a few hundred lines above.
+  # So every update overwrote the factory defaults with whatever the user had, and the
+  # two things that depend on shipped stopped working:
+  #   - "reset to defaults" restored the user's own settings, not the defaults
+  #   - the missing-config recovery restored a config that could be as broken as the one
+  #     it was replacing
+  #
+  # The release workflow ships governor.conf.shipped in the ZIP, so on a release build
+  # there is nothing to create. This branch exists for debug builds, which ship
+  # governor.conf instead - and there it must run BEFORE migration, not after.
+  if [ ! -f "$MODPATH/config/governor.conf.shipped" ] && [ -f "$MODPATH/config/governor.conf" ]; then
+    cp -f "$MODPATH/config/governor.conf" "$MODPATH/config/governor.conf.shipped" 2>/dev/null || true
+    chmod 644 "$MODPATH/config/governor.conf.shipped" 2>/dev/null || true
+  fi
   _old_conf="$NVBASE/modules/$MODID/config/governor.conf"
   # The modules_update fallback must never point at the file being installed.
   #
@@ -4085,10 +4102,7 @@ if [ "$_asb_audio_ref" != "1" ] || [ "${_asb_sibling:-0}" = "1" ]; then
   ui_print "[*] /vendor overlay active after ONE reboot (OP15-style); /odm audio via fuse-guarded runtime binds"
 fi
 
-	if [ -f "$MODPATH/config/governor.conf" ]; then
-	  cp -f "$MODPATH/config/governor.conf" "$MODPATH/config/governor.conf.shipped" 2>/dev/null || true
-	  chmod 644 "$MODPATH/config/governor.conf.shipped" 2>/dev/null || true
-	fi
+
 
 		asb_snapshot_user_config
 
