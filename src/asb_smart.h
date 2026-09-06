@@ -1029,6 +1029,29 @@ static void asb_smart_compute_effective(
         }
     }
 
+    /* A cold start still has a thermometer.
+     *
+     * The learned lean needs three effective observations in this bucket and four
+     * populated buckets before it does anything, which is a dozen sessions. Until then
+     * alpha sits at its 500 default and the phone runs close to Balanced ceilings - a
+     * capture after a learning reset shows exactly that: "no learned thermal history for
+     * this bucket yet - lean inactive", with current up from 210 to 313 mA on the same
+     * kind of workload.
+     *
+     * Waiting is right for the LEARNED thresholds, which are about this device's own
+     * normal. It is not right for an absolute reading: 60 C is warm on any phone, and no
+     * amount of history will make it otherwise. So a small fixed lean applies from the
+     * first tick, and the learned one takes over once it has evidence.
+     *
+     * Deliberately smaller than the learned lean can grow to: this is a floor to stop the
+     * cold-start case running hot, not a substitute for measuring the device. */
+    if (b->eff_obs_x100 < ASB_SMART_THERM_MIN_OBS_X100) {
+        int t_cold = (int)b->avg_max_temp_x10;
+        if (t_cold >= 600)      alpha += 60;   /* 60 C+: warm on any device  */
+        else if (t_cold >= 550) alpha += 30;
+        else if (t_cold > 0 && t_cold <= 400) alpha -= 20;  /* genuinely cool */
+    }
+
     if (b->eff_obs_x100 >= ASB_SMART_THERM_MIN_OBS_X100) {
         int t_c10 = (int)b->avg_max_temp_x10;
         if (t_c10 > 0) {

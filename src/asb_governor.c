@@ -4492,11 +4492,22 @@ static void asb_smart_persist_check(void) {
     if (!g_smart_rt.enabled || !g_smart_store_loaded) return;
     time_t now = time(NULL);
     /* Save throttled: at most once per 5 minutes */
-    if (now - g_smart_last_save_ts >= 300) {
+    /* Save on banked sessions too, not only on the clock.
+     *
+     * g_smart_sessions_since_save was incremented on every banked session and never read:
+     * the only trigger was the 300 s timer. That is usually enough, but it means a session
+     * banked shortly before a reboot - or before the governor is restarted by a config
+     * change - is lost, and on a phone that is rebooted often the learner can keep losing
+     * the same evidence it needs.
+     *
+     * Two sessions is a cheap threshold: the store is a few KB and the write is atomic.
+     */
+    if (now - g_smart_last_save_ts >= 300 || g_smart_sessions_since_save >= 2) {
         g_smart_store.last_update_ts = (uint32_t)now;
         int rc = asb_smart_store_save_atomic(&g_smart_store, ASB_SMART_STORE_FILE);
         if (rc == 0) {
             g_smart_last_save_ts = now;
+            g_smart_sessions_since_save = 0;
         }
         asb_smart_appheat_save();
     }
