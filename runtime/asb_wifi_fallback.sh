@@ -14,6 +14,14 @@ PID="$STATE_DIR/wifi_fallback.pid"
 ACTION="$STATE_DIR/wifi_fallback.action"
 COOLDOWN="$STATE_DIR/wifi_fallback.cooldown"
 CONFIRM="$STATE_DIR/wifi_fallback.confirm"
+# Separate counter for the signal path.
+#
+# Both reasons shared one file, and the validation path clears it whenever the network
+# passes - which is the normal case while walking out of range, because a router at the
+# edge still answers. So the signal counter was reset to zero and incremented to one on
+# every pass and never reached its threshold: the RSSI release could not fire at all
+# while the network stayed valid, which is exactly the situation it was written for.
+CONFIRM_RSSI="$STATE_DIR/wifi_fallback.confirm_rssi"
 LOG="$STATE_DIR/wifi_fallback.log"
 LOCK="$STATE_DIR/wifi_fallback.watch.lock"
 # Injected only by host fixtures; production always reads Android's /proc. Keeping this separate
@@ -196,13 +204,18 @@ _try_release() {
   fi
   if [ -n "${ASB_WIFI_LEAVE_ON_RSSI:-}" ]; then
     _rs_now="$(_wifi_rssi)"
+    # Signal recovered: clear the streak. Confirmation has to measure a continuous run
+    # of weak samples, not a tally of unrelated dips.
+    if [ -n "$_rs_now" ] && [ "$_rs_now" -ge "$ASB_WIFI_LEAVE_ON_RSSI" ] 2>/dev/null; then
+      rm -f "$CONFIRM_RSSI" 2>/dev/null
+    fi
     if [ -n "$_rs_now" ] && [ "$_rs_now" -lt "$ASB_WIFI_LEAVE_ON_RSSI" ] 2>/dev/null; then
-      _seen_r="$(cat "$CONFIRM" 2>/dev/null | tr -dc '0-9')"
+      _seen_r="$(cat "$CONFIRM_RSSI" 2>/dev/null | tr -dc '0-9')"
       case "$_seen_r" in '') _seen_r=0 ;; esac
       _seen_r=$(( _seen_r + 1 ))
-      { printf '%s\n' "$_seen_r" > "$CONFIRM"; } 2>/dev/null || true
+      { printf '%s\n' "$_seen_r" > "$CONFIRM_RSSI"; } 2>/dev/null || true
       if [ "$_seen_r" -ge "${ASB_WIFI_CONFIRM_PASSES:-3}" ] 2>/dev/null; then
-        rm -f "$CONFIRM" 2>/dev/null
+        rm -f "$CONFIRM_RSSI" 2>/dev/null
         _log "out of range (rssi=${_rs_now}) - releasing Wi-Fi default route"
         _nowv="$(_now)"
         if _wifi_disable; then
@@ -354,7 +367,7 @@ _stop() {
   _restore_if_owned
   # CONFIRM too: a streak counted before the feature was turned off must not survive to
   # shorten the first decision after it is turned back on.
-  rm -f "$PID" "$COOLDOWN" "$CONFIRM" 2>/dev/null
+  rm -f "$PID" "$COOLDOWN" "$CONFIRM" "$CONFIRM_RSSI" 2>/dev/null
   _lock_owner_alive || rm -rf "$LOCK" 2>/dev/null
 }
 _watch() {

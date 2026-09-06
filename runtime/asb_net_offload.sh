@@ -84,6 +84,33 @@ _save_once() {
   } > "$STATE" 2>/dev/null
 }
 
+# Restore just one kind of record, leaving the other side of the file alone.
+#
+# Same parsing as _restore, filtered by prefix, and the consumed lines are dropped from
+# the baseline so a later full restore does not try them twice.
+_restore_kind() {
+  _rk="$1"
+  [ -f "$STATE" ] || return 0
+  _rk_keep=""
+  while IFS= read -r _line; do
+    [ -n "$_line" ] || continue
+    case "$_line" in
+      "$_rk":*)
+        case "$_line" in
+          TXQ:*) _if="${_line#TXQ:}"; _if="${_if%%=*}"; _v="${_line#*=}"
+                 [ -n "$_v" ] && ip link set dev "$_if" txqueuelen "$_v" >/dev/null 2>&1 ;;
+          RPS:*) _q="${_line#RPS:}"; _q="${_q%%=*}"; _v="${_line#*=}"
+                 [ -w "$_q/rps_cpus" ] && echo "${_v:-0}" > "$_q/rps_cpus" 2>/dev/null ;;
+        esac
+        ;;
+      *) _rk_keep="${_rk_keep}${_line}
+" ;;
+    esac
+  done < "$STATE"
+  printf '%s' "$_rk_keep" > "$STATE" 2>/dev/null
+  echo "net offload: ${_rk} restored to the value the device had"
+}
+
 _restore() {
   [ -f "$STATE" ] || return 0
   while IFS= read -r _line; do
@@ -108,6 +135,18 @@ fi
 
 _rps="$(_cfg net_rps)";      case "$_rps" in little|all) : ;; *) _rps=stock ;; esac
 _txq="$(_cfg net_txqueue)";  case "$_txq" in short|shorter) : ;; *) _txq=stock ;; esac
+
+# Restore per resource, not only when both are stock.
+#
+# The all-or-nothing check meant net_rps=stock with net_txqueue=short left RPS on the
+# value ASB had written: the user set one control back to stock, the UI agreed, and the
+# setting did not move. Each control owns its own resource and has to be undone on its
+# own.
+if [ "$_rps" = "stock" ] && [ "$_txq" != "stock" ]; then
+  _restore_kind RPS
+elif [ "$_txq" = "stock" ] && [ "$_rps" != "stock" ]; then
+  _restore_kind TXQ
+fi
 
 if [ "$_rps" = "stock" ] && [ "$_txq" = "stock" ]; then
   _restore

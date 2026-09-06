@@ -37,7 +37,26 @@ case "$(_cfg phantom_procs)" in
     _put global settings_enable_monitor_phantom_procs true
     _changed="${_changed}phantom=strict "
     ;;
-  *) : ;;   # stock: leave whatever is there
+  *)
+    # stock means "put it back", not "walk away".
+    #
+    # Leaving the value alone made the setting one-way: strict -> stock reported stock in
+    # the UI while phantom-process monitoring stayed off, because ASB had turned it off
+    # and then declined to undo that. The user cannot restore it themselves - the key is
+    # not in any settings screen.
+    #
+    # asb_settings_put recorded the original before the first write, so it is there to be
+    # restored. When no record exists ASB never wrote the key, and leaving it is correct.
+    if [ -f "${ASB_PROFILE_BASELINE:-/data/adb/asb/profile_runtime_baseline.v1}" ]; then
+      _pp_orig="$(grep -m1 '^setting|global:settings_enable_monitor_phantom_procs|' \
+                  "${ASB_PROFILE_BASELINE:-/data/adb/asb/profile_runtime_baseline.v1}" \
+                  2>/dev/null | cut -d'|' -f3)"
+      if [ -n "$_pp_orig" ]; then
+        settings put global settings_enable_monitor_phantom_procs "$_pp_orig" >/dev/null 2>&1 \
+          && _changed="${_changed}phantom=stock(restored) "
+      fi
+    fi
+    ;;
 esac
 
 # Lock screen shortcuts were here and are gone: the keys they wrote

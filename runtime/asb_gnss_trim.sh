@@ -52,6 +52,35 @@ case "$(dumpsys deviceidle get screen 2>/dev/null)" in
   *true*|*on*) exit 0 ;;
 esac
 
+# Give location back to anything that is no longer cached.
+#
+# The header of this file says the trim lasts "until it is opened again", and that was
+# not implemented: the only restore path ran when the tweak itself was switched off. An
+# app the user opened after it had been trimmed stayed on COARSE_LOCATION=ignore for as
+# long as gnss_trim was on - so a navigation app resumed with no precise location and no
+# indication why.
+#
+# Checked before the trim loop below, so an app promoted and demoted in the same session
+# is handled in the right order.
+if [ -f "$STATE" ] && _has appops && _has dumpsys; then
+  _keep=""
+  while IFS= read -r _line; do
+    [ -n "$_line" ] || continue
+    _rp="${_line%%|*}"; _rm="${_line#*|}"
+    case "$_rm" in allow|ignore|deny|default|foreground) : ;; *) _rm="allow" ;; esac
+    _st="$(dumpsys activity processes "$_rp" 2>/dev/null \
+           | grep -m1 -oE 'cached|foreground|perceptible|visible')"
+    if [ -n "$_st" ] && [ "$_st" != "cached" ]; then
+      appops set "$_rp" COARSE_LOCATION "$_rm" >/dev/null 2>&1 \
+        && echo "gnss trim: $_rp is in use again - location restored"
+    else
+      _keep="${_keep}${_line}
+"
+    fi
+  done < "$STATE"
+  printf '%s' "$_keep" > "$STATE" 2>/dev/null
+fi
+
 _third="$(pm list packages -3 2>/dev/null | sed 's/^package://')"
 [ -n "$_third" ] || exit 0
 mkdir -p /data/adb/asb 2>/dev/null

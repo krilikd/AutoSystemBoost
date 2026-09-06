@@ -139,6 +139,38 @@ $_MORE
 $_MAX" ;;
 esac
 
+# Thaw whatever left the list when the level came down.
+#
+# Restoring only happened at "off", so max -> more -> safe left every component from the
+# higher tier frozen: the user lowered the setting, the report said the lower level, and
+# the search index stayed disabled. A level is a statement about what should be frozen
+# NOW, not a floor that only "off" can clear.
+#
+# Set difference against the recorded state: anything on record but not in the new list
+# goes back to what it was before ASB touched it.
+if [ -f "$STATE" ]; then
+  _keep=""
+  while IFS='|' read -r _sc _sw; do
+    [ -n "$_sc" ] || continue
+    case "
+$_list
+" in
+      *"
+$_sc
+"*) _keep="${_keep}${_sc}|${_sw}
+" ;;
+      *)
+        case "$_sw" in
+          # Already disabled before ASB: leave it that way.
+          disabled) : ;;
+          *) pm enable "$_sc" >/dev/null 2>&1 || true ;;
+        esac
+        ;;
+    esac
+  done < "$STATE"
+  printf '%s' "$_keep" > "$STATE" 2>/dev/null
+fi
+
 _done=0
 for _c in $_list; do
   [ -n "$_c" ] || continue
