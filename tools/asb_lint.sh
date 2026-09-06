@@ -890,6 +890,18 @@ if [ -f "$_mp" ]; then
   _mp_code="$(grep '^versionCode=' "$_mp" | head -1 | cut -d= -f2)"
   if [ -n "$_mp_ver" ] && [ -n "$_mp_code" ]; then
     ok "module identity present: version=$_mp_ver versionCode=$_mp_code"
+    # update.json is what the manager reads to offer an update, so a stale copy tells
+    # every installed user there is nothing new. It was two releases behind - V63/630
+    # against a V64/640 module - and nothing in the build checked.
+    if [ -f "$MODDIR/update.json" ]; then
+      _uj_ver="$(sed -n 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' "$MODDIR/update.json" | head -1)"
+      _uj_code="$(sed -n 's/.*"versionCode"[[:space:]]*:[[:space:]]*\([0-9]*\).*/\1/p' "$MODDIR/update.json" | head -1)"
+      if [ "$_uj_ver" = "$_mp_ver" ] && [ "$_uj_code" = "$_mp_code" ]; then
+        ok "update.json matches module.prop"
+      else
+        err "update.json says $_uj_ver/$_uj_code but module.prop says $_mp_ver/$_mp_code"
+      fi
+    fi
   else
     err "module.prop missing version or versionCode"
   fi
