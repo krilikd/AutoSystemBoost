@@ -4015,7 +4015,7 @@ const CFG_ITEMS = [
   // --- Memory & UX ---,
   { key:'bat_suppress_gaming', type:'bool', def:'1', name:'No Game Mode on Battery Profile',
     desc:'On the Battery profile, treat a game as ordinary heavy load rather than entering the gaming state. Gaming mode raises frequency ceilings, which is the opposite of what the Battery profile is for - so this keeps that profile honest. Off lets games get the full gaming treatment even on Battery. Affects the Battery profile only; the other three are untouched.' },
-  { key:'BG_TRIM_LEVEL', type:'seg', def:'safe', opts:['safe','aggressive'], name:'Background Trim Level',
+  { key:'BG_TRIM_LEVEL', type:'seg', def:'safe', opts:['off','safe','aggressive'], name:'Background Trim Level',
     desc:'How hard cached background apps are trimmed. Aggressive frees more RAM but cold-restarts apps more often.' },
   { key:'gms_trim', type:'seg', def:'stock', stock:'stock', opts:['stock','lite','strict'], name:'Google Services Trim',
     desc:'Reduces what Google Play services does in the background. This does NOT freeze or disable GMS - push notifications, sign-in, payments and the Play Store keep working, because a module that broke those would be lying about what it is for.\n\nlite stops location reporting and the search widget\u2019s background work; neither is involved in delivering a notification. strict additionally removes GMS from the Doze whitelist, which is where the real saving is on a phone where Google services are the main drain - and which can delay notifications by minutes while the phone is asleep. If messages arriving late would bother you, stay on lite.\n\nFully reversible: the permissions changed are recorded and restored when ASB is removed.' },
