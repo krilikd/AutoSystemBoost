@@ -51,7 +51,17 @@ current_boot_id() {
   _up="$(cut -d. -f1 /proc/uptime 2>/dev/null | tr -dc '0-9')"
   _now="$(date +%s 2>/dev/null || echo 0)"
   case "$_up" in ''|*[!0-9]*) _up=0 ;; esac
-  printf 'boot-%s' "$(( _now - _up ))"
+  # Round to the nearest minute: the fallback drifts, and a drifting boot id silently
+  # invalidates live locks.
+  #
+  # date and /proc/uptime are sampled a moment apart and each rounds down, so two calls
+  # seconds apart can differ by one - and lock_known_dead reads "different boot id" as
+  # "lock is from a previous boot, release it". Two concurrent starts then both reclaim the
+  # lock and both record, which is the concurrency contract failing at a random round.
+  #
+  # Only devices without /proc/sys/kernel/random/boot_id reach this line; on those, a minute
+  # of granularity is still far finer than the thing it identifies.
+  printf 'boot-%s' "$(( (_now - _up) / 60 ))"
 }
 PIDFILE="$LOCKDIR/pid"
 LAUNCHERFILE="$LOCKDIR/launcher"
@@ -234,7 +244,17 @@ lock_known_dead() {
   fi
   # An older lock with no boot_id recorded cannot be attributed to this boot either.
   # Releasing it is safe: the recorder it belonged to cannot have survived a restart.
-  [ -n "$_lk_boot" ] || return 0
+  # An unwritten boot id means "too early to tell", not "dead".
+  #
+  # The winner creates the lock directory and writes the boot id a moment later. In
+  # that window this line declared the lock stale, so a second request reclaimed it
+  # and both recorded - the concurrency contract failing at a random round, which is
+  # exactly the shape of a race.
+  #
+  # Everywhere else this function fails closed on missing evidence; this was the one
+  # place that failed open, and it undid the rest. A genuinely orphaned lock with no
+  # boot id is still cleared by the PID checks below and by the output-missing path.
+  [ -n "$_lk_boot" ] || return 1
 
   _lk_seen=0
   for _lk_file in "$PIDFILE" "$LAUNCHERFILE"; do

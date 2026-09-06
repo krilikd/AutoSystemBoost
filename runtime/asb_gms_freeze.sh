@@ -65,6 +65,29 @@ com.google.android.gms/.location.reporting.service.ReportingSyncService
 com.google.android.gms/.location.history.settings.LocationHistorySettingsService
 com.google.android.gms/.backup.BackupSchedulerService
 "
+# Level "max": the components a night capture actually caught waking the phone.
+#
+# A CPH2769 overnight trace shows Icing (the Google app-search indexer) resuming the SoC
+# five times and GOOGLE_C2DM seven, against 45 minutes of screen-off wakefulness that
+# accounted for two thirds of the night's drain. Those are the next things worth freezing,
+# and nothing above this line touches them.
+#
+# THE COST, stated plainly: Icing is what makes in-app and system search find things, and
+# the Fitness recorder is what counts steps in the background. Freezing them is a real
+# trade, not a free win - which is why this is its own level rather than an addition to
+# "more", and why the WebUI card says so.
+#
+# C2DM itself is deliberately NOT here. It is the push transport: freezing it does not
+# delay notifications, it stops them, and a phone that silently receives nothing is a
+# broken phone, not an efficient one.
+_MAX="
+com.google.android.gms/.icing.service.IndexService
+com.google.android.gms/.icing.proxy.AppsCorpusUpdateService
+com.google.android.gms/.icing.service.PersistentIndexService
+com.google.android.gms/.fitness.service.recording.FitRecordingService
+com.google.android.gms/.fitness.sensors.sample.FitSensorsService
+com.google.android.gms/.romanesco.BackupSchedulerService
+"
 
 _freeze_one() {
   _c="$1"
@@ -79,7 +102,7 @@ _freeze_one() {
 }
 
 _lvl="$(_cfg gms_freeze)"
-case "$_lvl" in off|safe|more) : ;; *) _lvl=off ;; esac
+case "$_lvl" in off|safe|more|max) : ;; *) _lvl=off ;; esac
 
 if [ "$_lvl" = "off" ]; then
   # Restore everything we ever froze, then forget it.
@@ -107,8 +130,14 @@ fi
 
 mkdir -p /data/adb/asb 2>/dev/null
 _list="$_SAFE"
-[ "$_lvl" = "more" ] && _list="$_SAFE
-$_MORE"
+# Levels are cumulative: max includes more, which includes safe.
+case "$_lvl" in
+  more) _list="$_SAFE
+$_MORE" ;;
+  max)  _list="$_SAFE
+$_MORE
+$_MAX" ;;
+esac
 
 _done=0
 for _c in $_list; do
