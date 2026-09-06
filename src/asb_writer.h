@@ -132,7 +132,18 @@ static int writer_write_int_confirmed(asb_write_node_t node, const char *path, i
      * caller asked about. Reporting it as a skip would make the health line look like
      * something was refused.
      */
-    int pre = sysfs_read_int(path, INT_MIN);
+    /* The uclamp nodes are excluded from this shortcut.
+     *
+     * They answer in percent-with-decimals or with the literal word "max", and
+     * sysfs_read_int turns "max" into 0. So a tier sitting at "max" reads back as 0, and a
+     * tick that legitimately wants 0 there matched and skipped the write - after which the
+     * cache said 0, the node still said "max", and nothing ever corrected it. A capture
+     * shows the result: all four tiers at ROM stock with writer health reporting 192 of
+     * 193 writes applied, because the skipped ones were counted as successes.
+     *
+     * The text-aware comparison further down handles these correctly; this fast path
+     * cannot, so it does not try. */
+    int pre = writer_node_is_uclamp(node) ? INT_MIN : sysfs_read_int(path, INT_MIN);
     if (pre != INT_MIN && pre == requested) {
         h->observed = pre;
         h->applied++;
