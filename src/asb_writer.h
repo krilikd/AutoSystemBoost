@@ -541,7 +541,18 @@ static void writer_profile_baseline_record_path(const char *path) {
     ssize_t n = read(fd, value, sizeof(value) - 1);
     close(fd);
     if (n <= 0) return;
-    for (ssize_t i = 0; i < n; i++) if (value[i] == '\n' || value[i] == '\r' || value[i] == '|') value[i] = '_';
+    /* Trim the trailing newline; do not rewrite the value.
+     *
+     * Replacing every LF, CR and pipe with '_' was meant to keep the record's pipe-
+     * delimited format intact, and it does - but sysfs reads come back with a trailing
+     * newline, so "1200000\n" was stored as "1200000_". Restoring that writes a string
+     * no numeric node will accept, and the original frequency is gone.
+     *
+     * Trailing whitespace is cut instead. A pipe INSIDE a value would still break the
+     * format, so that one substitution stays - no sysfs node this records contains one,
+     * and mangling a hypothetical value is better than corrupting the whole file. */
+    while (n > 0 && (value[n-1] == '\n' || value[n-1] == '\r' || value[n-1] == ' ')) value[--n] = '\0';
+    for (ssize_t i = 0; i < n; i++) if (value[i] == '|') value[i] = '_';
 
     FILE *f = fopen("/data/adb/asb/profile_runtime_baseline.v1", "a+");
     if (!f) return;
